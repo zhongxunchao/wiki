@@ -1,0 +1,658 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>iOS/简单的计算器实现 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="My Docs" class="md-header-nav__button md-logo" aria-label="My Docs">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            My Docs
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              iOS/简单的计算器实现
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../first/" title="First" class="md-nav__link">
+      First
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../second/" title="Second" class="md-nav__link">
+      Second
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        iOS/简单的计算器实现
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="iOS/简单的计算器实现" class="md-nav__link md-nav__link--active">
+      iOS/简单的计算器实现
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 如何实现计算器
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 代码实现
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 如何实现计算器
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 代码实现
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="_1">简单的计算器</h1>
+<h2 id="1">1. 如何实现计算器</h2>
+<p>实现计算器一般会有两种方法：一种是使用前缀和后缀（中缀）表达式，一种是定义栈内和栈外的优先级。
+我使用了第二种方法：
+1）将输入的运算式转化为由运算符和运算数组成的数组;
+2) 准备好运算数的栈和运算符的栈；
+3）依次读入数组中的元素，若是运算数则直接压入运算数栈，若是运算符则将该运算符的优先级和运算符栈顶元素优先级比较，有以下情况：
+a)若前者大，则该运算符直接入栈；
+b)若后者大，则弹出栈顶运算符，并弹出两个运算数，将运算结果压入运算数栈；
+c）若两者相等，则两者抵消。
+如此直到运算符栈清空，得到最后结果。</p>
+<p><strong>思路</strong>
+栈内栈外的优先级也有些意思的。括号在平时的计算中拥有最高优先级，然而表达式有左右括号之分，故不得不将一个括号优先级设为最低，另一个设为最高（它们在栈内栈外对立时必须优先级相等）。加减号优先级本来相等，但是显然栈内运算优先，故一般运算符栈内优先级高1。</p>
+<p>这个计算器只是实现了基本思路，比如负号，除以零处理等等都还没来得及做，以后会补上。</p>
+<h2 id="2">2. 代码实现</h2>
+<p>首先是一个处理栈等基本功能的类。</p>
+<pre><code>
+//定义一个处理基本操作的类
+class CalculateTool: NSObject {
+    var opndStack:Array&lt;String&gt;?    //运算数栈
+    var optrStack:Array&lt;String&gt;?    //运算符栈
+
+    //初始化运算数栈
+    func initOpndStack()
+    {
+        opndStack = Array&lt;String&gt;()
+    }
+    //初始化运算符栈
+    func initOptrStack(){
+        optrStack = Array&lt;String&gt;()
+    }
+    //压入运算数
+    func pushOperand(operand:String)
+    {
+        opndStack?.append(operand)
+    }
+    //压入运算符
+    func pushOperator(optr:String)
+    {
+        optrStack?.append(optr)
+    }
+    //弹出一个运算数,返回弹出数:小数点也是数
+    func popOperand() -&gt; Float
+    {
+        if opndStack?.count &gt; 0
+        {
+             let last = opndStack?.last
+            opndStack?.removeLast()
+            let lastString = last! as NSString
+            return lastString.floatValue
+        }
+        return 0.0
+    }
+    //弹出一个运算符
+    func popOperator() -&gt; String
+    {
+        if optrStack?.count&gt;0
+        {
+            let last = optrStack?.last
+            optrStack?.removeLast()
+            return last!
+        }
+        return &quot;&quot;
+    }
+    //取栈顶运算数
+    func getTopOperand() -&gt; Float
+    {
+        if opndStack?.count &gt; 0
+        {
+            let last = opndStack?.last
+            let lastString = last! as NSString
+            return lastString.floatValue
+        }
+        return 0.0
+    }
+    //取栈顶运算符
+    func getTopOperator() -&gt; String
+    {
+        if optrStack?.count&gt;0
+        {
+            let last = optrStack?.last
+            return last!
+        }
+        return &quot;&quot;
+    }
+    //判断字符串是否为运算符
+    func isOperator(c:String)-&gt;Bool
+    {
+        if c==&quot;+&quot; || c==&quot;÷&quot; || c==&quot;×&quot; || c==&quot;－&quot; || c==&quot;=&quot; || c==&quot;(&quot; || c==&quot;)&quot;
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+
+    //判断运算符的优先级:栈内和栈外的区别
+    func precedeInStack(s:String) -&gt; Int
+    {
+        switch s {
+        case &quot;-&quot;:
+            fallthrough
+        case &quot;+&quot;:
+            return 2
+        case &quot;×&quot;:
+            fallthrough
+        case &quot;÷&quot;:
+            return 4
+        case &quot;(&quot;:
+            return 0
+        case &quot;)&quot;:
+            return 7
+        default:
+            return -1
+        }
+    }
+    func precedeOutStack(s:String) -&gt; Int
+    {
+        switch s {
+        case &quot;-&quot;:
+            fallthrough
+        case &quot;+&quot;:
+            return 1
+        case &quot;×&quot;:
+            fallthrough
+        case &quot;÷&quot;:
+            return 3
+        case &quot;(&quot;:
+            return 7
+        case &quot;)&quot;:
+            return 0
+        default:
+            return -1
+        }
+    }
+
+    //进行单独的运算
+    func operate(x:Float,opr:String,y:Float) -&gt; Float
+    {
+        var result:Float?
+        switch opr
+        {
+        case &quot;+&quot;:
+            result = x+y
+            break
+        case &quot;-&quot;:
+            result = x-y
+            break
+        case &quot;×&quot;:
+            result = x*y
+            break
+        case &quot;÷&quot;:
+            if y != 0
+            {
+                result = x/y
+            }
+            else
+            {
+                return PI
+            }
+            break
+        default:
+            result = 0
+            break
+        }
+        return result!
+    }
+}
+</code></pre>
+
+<p>接着处理运算表达式：</p>
+<pre><code>class CalculateResult: NSObject {
+    var calculateTool:CalculateTool!
+
+    override init() {
+        super.init()
+        calculateTool = CalculateTool()
+        calculateTool.initOptrStack()
+        calculateTool.initOpndStack()
+    }
+    //如何排除异常的表达式，包括小数点，除以0，其他格式
+    func calculateWithString(s:String) -&gt; Float
+    {
+        var calculateString = stringToArray(s)
+        var result:Float = 0.0//初始化一个结果
+        while calculateString.count&gt;0
+        {
+            let firstElement = calculateString.first
+            if firstElement?.componentsSeparatedByString(&quot;.&quot;).count&gt;2
+            {
+                return PI
+            }
+            else if Float(firstElement!)==nil//如果是运算符,则比较优先级；多个小数点的情况
+            {
+                let topOptr = calculateTool.getTopOperator()
+                //如果栈内运算符优先级较低,则运算符入栈
+                if calculateTool.precedeInStack(topOptr)&lt;calculateTool.precedeOutStack(firstElement!)
+                {
+                    calculateTool.pushOperator(firstElement!)
+                    calculateString.removeAtIndex(0)
+                    continue
+                }
+                //从符号栈弹出一个运算符，从对象栈弹出2个操作数，运算结果压入对象栈
+                else if calculateTool.precedeInStack(topOptr)&gt;calculateTool.precedeOutStack(firstElement!)
+                {
+                    let popOptr = calculateTool.popOperator()
+                    let secondNumber = calculateTool.popOperand()
+                    let firstNumber = calculateTool.popOperand()
+                    let tempResult = calculateTool.operate(firstNumber, opr: popOptr, y: secondNumber)
+                    if tempResult==PI//如果除以0
+                    {
+                        calculateTool.initOptrStack()
+                        calculateTool.initOpndStack()
+                        return PI
+                    }
+
+                    calculateTool.pushOperand(String(tempResult))
+                    continue
+                }
+                else//两个运算符相等时，从运算栈抵消
+                {
+                    let a = calculateTool.popOperator()
+                    print(&quot;弹出的运算符为\(a)&quot;)
+                    calculateString.removeAtIndex(0)
+                    continue
+                }
+            }
+            else//如果运算数则直接入栈，如果有两个小数点需要报错
+            {
+                calculateTool.pushOperand(firstElement!)
+                calculateString.removeAtIndex(0)
+                continue
+            }
+        }
+        //上述步骤结束后那么剩下的运算符必然有序排列:从运算符栈弹出一个运算符，从运算数栈弹出两个运算数，将结果压入运算数
+        while calculateTool.getTopOperator() != &quot;&quot;
+        {
+            let popOptr = calculateTool.popOperator()
+            let secondNumber = calculateTool.popOperand()
+            let firstNumber = calculateTool.popOperand()
+            let tempResult = calculateTool.operate(firstNumber, opr: popOptr, y: secondNumber)
+            calculateTool.pushOperand(String(tempResult))
+        }
+        result = calculateTool.getTopOperand()
+        calculateTool.initOptrStack()
+        calculateTool.initOpndStack()
+        return result
+    }
+
+
+    //将输入的字符串输出为数组
+    func stringToArray(s:String) -&gt; Array&lt;String&gt;
+    {
+        var stringArray = Array&lt;String&gt;()
+        var mutableStr = s
+        while mutableStr.characters.count&gt;0
+        {
+            let firstCharacter = mutableStr.substringToIndex(mutableStr.startIndex.advancedBy(1))
+            if Int(firstCharacter)&gt;=0 &amp;&amp;  Int(firstCharacter)&lt;10//如果是数字
+            {
+                let length = mutableStr.characters.count
+
+                //从前向后扫描
+                for i in 0...length-1
+                {
+                    let character = mutableStr.substringWithRange(Range(start:mutableStr.startIndex.advancedBy(i),end:mutableStr.startIndex.advancedBy(i+1)))
+                    print(&quot;该字符的整数值为\(Int(character))&quot;)
+                    if Int(character)==nil &amp;&amp; character != &quot;.&quot;
+                    {
+                        let numberStr = mutableStr.substringToIndex(mutableStr.startIndex.advancedBy(i))
+                        stringArray.append(numberStr)
+                        mutableStr = mutableStr.substringFromIndex(mutableStr.startIndex.advancedBy(i))
+                        break//跳出当次循环
+                    }
+                }
+            }
+            else//如果是运算符
+            {
+                stringArray.append(firstCharacter)
+                mutableStr = mutableStr.substringFromIndex(mutableStr.startIndex.advancedBy(1))
+            }
+        }
+
+        return stringArray
+    }
+
+}
+</code></pre>
+
+<p>界面用的UICollectionView，很容易实现。</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../../second/" title="Second" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Second
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
