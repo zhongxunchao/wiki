@@ -1,0 +1,383 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>AppleScript语言介绍 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#applescript" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="My Docs" class="md-header-nav__button md-logo" aria-label="My Docs">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            My Docs
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              AppleScript语言介绍
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      iOS
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="iOS" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        iOS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../iOS/%E7%AE%80%E5%8D%95%E7%9A%84%E8%AE%A1%E7%AE%97%E5%99%A8/" title="-简单的计算器实现" class="md-nav__link">
+      -简单的计算器实现
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#applescript" class="md-nav__link">
+    AppleScript语言介绍
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    本文档的阅读范围
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    本文档的组织结构
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    本文档约定
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    你还需要看的东西
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                  <h1>AppleScript语言介绍</h1>
+                
+                <p>这篇翻译我曾经在csdn和简书上发表.
+翻译来源：<a href="https://developer.apple.com/library/mac/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html">AppleScript Introduction</a></p>
+<p>注：AppleScript准确说是苹果脚本，是Apple公司推出来的支持mac的一种脚本语言，支持mac自带的脚本编辑器。</p>
+<h2 id="applescript">AppleScript语言介绍</h2>
+<pre><code>这份文档是关于AppleScript的指导－包括它的约定词语，语法，关键字和其他元素。这里主要支持AppleScript 2.0和OS X10.5以上的版本。
+</code></pre>
+<p>AppleScript2.0可以使用AppleScirpt1.1到1.10.7开发的脚本，任何AppleScript1.5以上的脚本扩展，以及OS X7.1以上的脚本应用程序。同时，如果AppleScript2.0编写的脚本如果没有用到任何之前版本没有用到的特征，那么它也是可以被AppleScript1.1之后的版本使用的。</p>
+<p>AppleScript是什么？</p>
+<p>AppleScript是Apple公司推出的一种脚本语言。它允许用户直接控制mac上的应用程序。与此同时，它本身也可以成为OS X系统的一部分。面对一些重复性的任务，你可以编写代码使得它们自动完成。你也可以和应用程序结合起来，去完成更复杂的工作。</p>
+<p>脚本化的应用是指可以被脚本控制的应用。具体到AppleScript，对应用程序内的消息的响应称为Apple events.脚本对应用程序发出指令就会触发Apple events.</p>
+<p>AppleScript仅仅提供少量的指令，但是它提供一整套框架--那些由应用程序和系统脚本提供的的特殊指令。</p>
+<p>在这份指导文件中，绝大部分脚本案例和代码模块都使用了Finder，OS X脚本模块或者脚本化应用程序中的脚本特性。比如说TextEdit。</p>
+<h2 id="_1">本文档的阅读范围</h2>
+<p>如果你需要编写AppleScript脚本，或者需要创建脚本化应用程序，了解脚本背后的机制，那么你有必要阅读本文档。</p>
+<p>《AppleScript 语言指导》假定你对《AppleScript Overview》中的关于AppleScript的高级信息十分了解。</p>
+<h2 id="_2">本文档的组织结构</h2>
+<p>这份指导在一系列的章节和附录中描述了AppleScript语言。</p>
+<p>在最初的五个章节中，我们描述了AppleScript的组成和基本概念，并且提供了基本类型和日常程序的概览：</p>
+<p>AppleScript词汇定义描述了特性，符号，关键字以及构成AppleScript脚本的其他语言元素;</p>
+<p>AppleScript基础描述了本指南内,术语和规则的基本概念；</p>
+<p>变量和属性描述了处理变量和属性时的问题，包括AppleScript对它们的声明和解释范围；</p>
+<p>脚本对象描述了对脚本对象的定义，初始化，继承以及向他们发送命令；</p>
+<p>关于处理器（此处翻译为函数句柄或许更准确）提供了使用函数的信息，这些函数可以分解和复用代码。</p>
+<p>接下来的几个章节提供了AppleScript语言的参考信息：</p>
+<p>类参考描述了脚本中通用对象的定义；</p>
+<p>命令行参考描述了在任何脚本中都能使用的命令；</p>
+<p>参考表单描述了在应用程序及其他容器中，指定一个或一组对象的语法；</p>
+<p>操作参考提供了AppleScript中的各种操作和使用方法，以及常见操作的使用细节；</p>
+<p>操作声明参考描述了控制其他声明怎么执行，什么时候执行的声明。它包括了标准状态的声明，错误处理以及其他操作的声明；</p>
+<p>处理器参考则说明了定义和使用这些函数句柄的语法，也包括其他的一些场景。</p>
+<p>接下来的一个章节OS X系统中与AppleScript相关的一些特性：</p>
+<p>文件行为参考描述了你怎么编写脚本函数以及怎么把它和特定的文件关联起来，比如当文件内容被修改时就会被调用的函数。</p>
+<p>附录部分则提供了AppleScript语言的额外信息，以及你应该怎么处理异常情况：</p>
+<p>AppleScript关键字列出了AppleScript中的关键字和它们的简单描述，相关的信息；</p>
+<p>异常编号和异常信息列出了你在AppleScript脚本中可能遇到的异常的编号和描述信息；</p>
+<p>异常处理提供了运用try方法和error方法处理异常的详细案例；</p>
+<p>双括号描述了什么时候你会碰到双括号和怎么运用它们；</p>
+<p>不支持条款则描述了那些在AppleScript过去的版本中支持，而现在不再支持的情况。</p>
+<h2 id="_3">本文档约定</h2>
+<p>所有术语在它们定义的地方都使用黑体。</p>
+<p>在语法表达中将用到以下术语：</p>
+<pre><code>   基本语言要素   有的元素就用普通字体，那么它的含义就和你想的一样。比如说你看到了像"+"或者"&amp;"这样的字符，那就是它们的本来含义
+      占位符   斜体文本表示它是可以用合适的值替代的
+      可选值[]
+</code></pre>
+<p>中括号表示内部的元素是可选的
+          数组（）  将一组元素放在一块。它本身也可以作为函数参数。
+          可选值[]...  后面三个点表示你可以把这组元素重复多次
+          a|b|c 你有一组元素可以选择，但是最后必须确定一个。它经常被用在小括号或中括号内</p>
+<pre><code>  脚本内的文件名
+</code></pre>
+<p>本文档中，大部分用到的文件名都是带扩展名的，比如文本文档就有扩展名rtf。使用扩展名在Finder参考标准中是有必要的。</p>
+<p>要使用你电脑上的案例，你可能需要更改它们的文件名。</p>
+<h2 id="_4">你还需要看的东西</h2>
+<p>下面这些苹果官方的文档也会提供AppleScript的帮助：</p>
+<p>快速看一遍Getting Started with AppleScript 对脚本使用者和开发者都是很有用的；</p>
+<p>看一下AppleScript Overview，包括Scripting with AppleScript这一章，里面有对AppleScript的高度概括和相关技术；</p>
+<p>Getting Started With Scripting &amp; Automation中有OS X系统中常用的脚本技术；</p>
+<p>AppleScript Terminology and Apple Event Codes列出了Apple规定的很多脚本场景。</p>
+<p>如果你要学习AppleScript语言和脚本的更多信息，可以去看看bookstore和网上的复杂的第三方文档。</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
