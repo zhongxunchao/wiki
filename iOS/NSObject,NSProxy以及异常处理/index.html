@@ -15,7 +15,7 @@
     
     
       
-        <title>《程序开发心理学》第二篇 - My Docs</title>
+        <title>NSObject,NSProxy以及异常处理 - My Docs</title>
       
     
     
@@ -48,7 +48,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#1-nsproxynsobject" class="md-skip">
           Skip to content
         </a>
       
@@ -76,7 +76,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              《程序开发心理学》第二篇
+              NSObject,NSProxy以及异常处理
             
           </span>
         </div>
@@ -160,10 +160,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       iOS
@@ -187,7 +189,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../iOS/%E7%AE%80%E5%8D%95%E7%9A%84%E8%AE%A1%E7%AE%97%E5%99%A8/" title="简单的计算器实现" class="md-nav__link">
+    <a href="../%E7%AE%80%E5%8D%95%E7%9A%84%E8%AE%A1%E7%AE%97%E5%99%A8/" title="简单的计算器实现" class="md-nav__link">
       简单的计算器实现
     </a>
   </li>
@@ -197,11 +199,77 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../iOS/NSObject%2CNSProxy%E4%BB%A5%E5%8F%8A%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="NSObject,NSProxy以及异常处理" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        NSObject,NSProxy以及异常处理
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="NSObject,NSProxy以及异常处理" class="md-nav__link md-nav__link--active">
       NSObject,NSProxy以及异常处理
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-nsproxynsobject" class="md-nav__link">
+    1. NSProxy和NSObject
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 方法重定向
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3.注意
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4.再看看
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    5.小结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -256,12 +324,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       读书笔记
@@ -285,7 +351,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%B8%80%E7%AF%87/" title="《程序开发心理学》第一篇" class="md-nav__link">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%B8%80%E7%AF%87/" title="《程序开发心理学》第一篇" class="md-nav__link">
       《程序开发心理学》第一篇
     </a>
   </li>
@@ -295,63 +361,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        《程序开发心理学》第二篇
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
-        </span>
-      </label>
-    
-    <a href="./" title="《程序开发心理学》第二篇" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%BA%8C%E7%AF%87/" title="《程序开发心理学》第二篇" class="md-nav__link">
       《程序开发心理学》第二篇
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    绩效评价
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    项目结构
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    大型项目中共同的社会性问题
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -361,7 +375,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%B8%89%E7%AF%87/" title="《程序开发心理学》第三篇" class="md-nav__link">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%B8%89%E7%AF%87/" title="《程序开发心理学》第三篇" class="md-nav__link">
       《程序开发心理学》第三篇
     </a>
   </li>
@@ -373,7 +387,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E5%9B%9B%E7%AF%87/" title="《程序开发心理学》第四篇" class="md-nav__link">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E5%9B%9B%E7%AF%87/" title="《程序开发心理学》第四篇" class="md-nav__link">
       《程序开发心理学》第四篇
     </a>
   </li>
@@ -408,22 +422,36 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    绩效评价
+  <a href="#1-nsproxynsobject" class="md-nav__link">
+    1. NSProxy和NSObject
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    项目结构
+  <a href="#2" class="md-nav__link">
+    2. 方法重定向
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    大型项目中共同的社会性问题
+  <a href="#3" class="md-nav__link">
+    3.注意
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4.再看看
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    5.小结
   </a>
   
 </li>
@@ -444,21 +472,210 @@
                   
                 
                 
-                  <h1>《程序开发心理学》第二篇</h1>
+                  <h1>NSObject,NSProxy以及异常处理</h1>
                 
-                <p>建立一种无私的分享的氛围能够使效率达到最高。</p>
-<p>领导最好不要插手成员之间的自然的地位变化。</p>
-<h2 id="_1">绩效评价</h2>
-<p>进展报告很多时候并不能得到正确的结果，经过层层润色之后，得到的只不过是相对中庸，看不出太大问题的结果（或许需要一个充分了解项目的人来说明实话？）。上上下下所有人为之兴师动众的进度报告，不过是一个徒劳无益的游戏。</p>
-<p>报告在逐层过滤的过程中，一些极端数据会被处理，使其看上去更加平缓。</p>
-<p>主管们需要学会的，应该是如何促进人们修正自己的工作方式或者生产速度，而不应该让他们把自己的工作掩盖起来。但是实际情况中，报告的撰写人通常就是对报告中的工作负责的人。</p>
-<p>每个人都可能臣服于周围人的压力；但是哪怕只有一名同盟者，他的压力就会小很多。</p>
-<p>解决上述问题的方法是设定一个专业的魔鬼异议者；为了避免单个异议者压力过大以至于失去了本身的功能，可以考虑由个人轮流担任该职位。</p>
-<h2 id="_2">项目结构</h2>
-<p>在小组中，有的小组服务性更强，他们可能会被歧视，从而避免与其他小组成员打交道。一般可以多组织集体活动来加强成员之间的沟通。</p>
-<h2 id="_3">大型项目中共同的社会性问题</h2>
-<p>一旦监督管理人员不能吃透自己负责的工作，那么他们在奖励程序猿时所依据的标准，就不再是工作的效果本身，而是其工作的外在表现。</p>
-<p>最后，如果某个程序员不可或缺的，那么还是越快请他走人越好。</p>
+                <h2 id="1-nsproxynsobject">1. NSProxy和NSObject</h2>
+<p>基本所有的iOS中的类都是NSObject的字类，但是NSProxy不是。
+NSProxy是一个虚类，你可以通过继承它，并重载下面两个方法以实现将消息转发到另一个实体。</p>
+<pre><code>- (void)forwardInvocation:(NSInvocation *)invocation;
+- (nullable NSMethodSignature *)methodSignatureForSelector:(SEL)sel NS_SWIFT_UNAVAILABLE(“NSInvocation and related APIs not available”);
+</code></pre>
+
+<p>这里最好描述一下虚类的概念：虚类又叫做抽象类，这个类主要定义一些方法然后让子类去实现。正如有人描述的，动物是一个大概念，但是通常情况下你不会去定义动物的对象；而是先产生继承的字类猫啊，狗啊的，再去实例化。这个动物就可以用虚类来表示了，毕竟动物是有共性的。以上纯属个人理解，非官方语言描述！
+NSObject既是对象的基类，又是一种协议。它的头文件是这样的：</p>
+<pre><code>@interface NSObject &lt;NSObject&gt; {
+    Class isa  OBJC_ISA_AVAILABILITY;
+}
+</code></pre>
+
+<p>而NSObject协议的定义是这样的:</p>
+<pre><code>#include &lt;objc/objc.h&gt;
+#include &lt;objc/NSObjCRuntime.h&gt;
+
+@class NSString, NSMethodSignature, NSInvocation;
+
+@protocol NSObject
+
+- (BOOL)isEqual:(id)object;
+@property (readonly) NSUInteger hash;
+
+@property (readonly) Class superclass;
+- (Class)class OBJC_SWIFT_UNAVAILABLE(&quot;use 'anObject.dynamicType' instead&quot;);
+- (instancetype)self;
+
+- (id)performSelector:(SEL)aSelector;
+- (id)performSelector:(SEL)aSelector withObject:(id)object;
+- (id)performSelector:(SEL)aSelector withObject:(id)object1 withObject:(id)object2;
+
+- (BOOL)isProxy;
+
+- (BOOL)isKindOfClass:(Class)aClass;
+- (BOOL)isMemberOfClass:(Class)aClass;
+- (BOOL)conformsToProtocol:(Protocol *)aProtocol;
+
+- (BOOL)respondsToSelector:(SEL)aSelector;
+
+- (instancetype)retain OBJC_ARC_UNAVAILABLE;
+- (oneway void)release OBJC_ARC_UNAVAILABLE;
+- (instancetype)autorelease OBJC_ARC_UNAVAILABLE;
+- (NSUInteger)retainCount OBJC_ARC_UNAVAILABLE;
+
+- (struct _NSZone *)zone OBJC_ARC_UNAVAILABLE;
+
+@property (readonly, copy) NSString *description;
+@optional
+@property (readonly, copy) NSString *debugDescription;
+
+@end
+</code></pre>
+
+<p>很全很熟悉不是吗？！</p>
+<p>NSProxy一个虚类，但是同时它也实现了NSObject协议，它的定义是这样的:</p>
+<pre><code>@interface NSProxy &lt;NSObject&gt; {
+    Class   isa;
+}
+</code></pre>
+
+<h2 id="2">2. 方法重定向</h2>
+<p>比较优秀的iOS工程师应该都知道对象在调用方法时的机制，会寻找当前类的方法缓存，方法链表；然后依次向父类去寻找，一直到NSObject,到了NSobject还是找不到的话，我们有机会使用上面的方法来转移方法的注意力了。
+到这里我本来想引用另一个博客中定义了NSProxy父类的方法，但是博主不允许随便转载，大家有空自己去看吧。
+<a href="http://blog.csdn.net/devday/article/details/7418022">链接在此</a>
+我们先定义一个TestTool类。</p>
+<pre><code>//TestTool.h
+@interface TestTool : NSObject
+{
+    id star;
+}
+
+- (instancetype)initWithId:(id)obj;
+
+//- (void)test;
+@end
+</code></pre>
+
+<pre><code>//TestTool.m
+- (instancetype)initWithId:(id)obj
+{
+    star = [obj copy];
+    return self;
+}
+</code></pre>
+
+<p>请注意这里我们没有定义test方法。如果我们对TestTool对象调用该方法，毫无疑问会崩溃的。（请注意这里编译器如何不报错，使用id对象）
+这时重定向的方法可以起作用了,在TestTool.m中加入以下方法：</p>
+<pre><code>//如果可以在m文件内部捕捉到这些方法则这些都不会调用
+- (void)forwardInvocation:(NSInvocation *)anInvocation
+{
+    NSLog(@&quot;调用了forwardInvocation方法&quot;);
+    [anInvocation invokeWithTarget:star];
+}
+
+//方法签名需要和NSInvocation联合使用
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
+{
+    //对于NSObject的字类，如果头文件中没有声明该方法，那么直接编译错误
+    //而如果头文件声明，但是在m文件中找不到实现，则会调用该方法，从而有机会使用别的对象来实现
+    NSLog(@&quot;检验本类中该函数的签名&quot;);
+    NSMethodSignature *sig;
+    if ([star methodSignatureForSelector:aSelector])
+    {
+        //如果这里不把方法签名传到star上也会报错的，test方法找不到实现的目标
+        sig = [star methodSignatureForSelector:aSelector];
+    }
+    return sig;
+}
+</code></pre>
+
+<p>很明显，在methodSignatureForSelector：中，我们将试图把star的方法签名赋予Target;而forwardInvocation:则指定了方法实现的目标。两者缺一不可。
+接着我们试着去测试它,先定义重定向的目标类，当然它最好有test方法了。</p>
+<pre><code>//Another.h
+@interface Another : NSObject&lt;NSCopying&gt;
+
+- (void)test;
+@end
+</code></pre>
+
+<pre><code>- (void)test
+{
+    NSLog(@&quot;这里实现了test方法&quot;);
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    return [[[self class] allocWithZone:zone] init];
+}
+</code></pre>
+
+<p>OK,现在我们可以正式去看看重定向的结果了：</p>
+<pre><code>Another *another = [Another new];
+id tool = [[TestTool alloc] initWithId:another];
+[tool test];
+</code></pre>
+
+<p>可以看到打印的结果：这里实现了test方法.</p>
+<h2 id="3">3.注意</h2>
+<p>上面值得注意的一点是记得TargetProxy或者其他对象初始化时返回的是id，而不直接指定为该类的对象，否则编译器将去该类的父类簇的方法链表中寻找该方法，导致直接编译出错，这样连消息重定向的机会都没有了。</p>
+<h2 id="4">4.再看看</h2>
+<p>本来研究到这里告一段落了，和我之前留下的印象差不多。但是看到NSObject中的一些方法，忍不住拿来玩了一下。</p>
+<pre><code>+ (BOOL)instancesRespondToSelector:(SEL)aSelector
+{
+    NSLog(@&quot;调用instancesRespondToSelector&quot;);
+    return YES;
+}
++ (BOOL)conformsToProtocol:(Protocol *)protocol
+{
+    NSLog(@&quot;调用conformsToProtocol&quot;);
+    return YES;
+}
+- (IMP)methodForSelector:(SEL)aSelector
+{
+    NSLog(@&quot;调用methodForSelector&quot;);
+    IMP imp = [self methodForSelector:aSelector];
+    return imp;
+}
++ (IMP)instanceMethodForSelector:(SEL)aSelector
+{
+    NSLog(@&quot;调用instanceMethodForSelector&quot;);
+    IMP imp = [self instanceMethodForSelector:aSelector];
+    return imp;
+}
+- (void)doesNotRecognizeSelector:(SEL)aSelector
+{
+    NSLog(@&quot;调用doesNotRecognizeSelector&quot;);
+}
+
+- (id)forwardingTargetForSelector:(SEL)aSelector
+{
+    NSLog(@&quot;调用forwardingTargetForSelector&quot;);
+    return self;
+}
+
++ (NSMethodSignature *)instanceMethodSignatureForSelector:(SEL)aSelector
+{
+    NSMethodSignature *sig = [self instanceMethodSignatureForSelector:aSelector];
+    NSLog(@&quot;调用instanceMethodSignatureForSelector&quot;);
+    return sig;
+}
+</code></pre>
+
+<p>大多数方法含义是明确的，但是确实发现forwardingTargetForSelector：这个方法会在消息转移之前被调用。
+查阅了一些资料后，它的作用是可以直接将要转发的对象返回。你应该有办法去尝试这个方法的作用。
+A如果想要把一封信交给B，可以直接把B叫到家里来；也可以给B送过去，这个机制可谓相当厉害了。
+在以上3个方法都没有找到消息接收者的情况下，系统大概也没办法了，只能给你最后一次补救的机会：</p>
+<pre><code>- (void)doesNotRecognizeSelector:(SEL)aSelector;
+</code></pre>
+
+<p>我没能找到这个方法，你自己看着办吧，我要抛出异常了。好吧，到这里应用基本上就会崩溃了。</p>
+<h2 id="5">5.小结</h2>
+<p>最后总结一下呢，就是调用方法的消息发出后，先去该类及类别的方法链表中去找，找不到就去找父类了；直到最后找到基类：NSObject.
+然后会依次调用下面几个方法（在没有消息响应者的情况下）：</p>
+<pre><code>- (id)forwardingTargetForSelector:(SEL)aSelector；
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel；
+- (void)forwardInvocation:(NSInvocation *)invocation；
+- (void)doesNotRecognizeSelector:(SEL)aSelector；
+</code></pre>
+
+<p>另外补一句，使用try…catch方法也可以不崩溃，不过个人不是特别感冒这个。问题隐藏了不代表不存在，不是吗？</p>
                 
               
               
@@ -477,7 +694,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%B8%80%E7%AF%87/" title="《程序开发心理学》第一篇" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../%E7%AE%80%E5%8D%95%E7%9A%84%E8%AE%A1%E7%AE%97%E5%99%A8/" title="简单的计算器实现" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -486,19 +703,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                《程序开发心理学》第一篇
+                简单的计算器实现
               </div>
             </div>
           </a>
         
         
-          <a href="../%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%B8%89%E7%AF%87/" title="《程序开发心理学》第三篇" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../%E7%BF%BB%E8%AF%91/AppleScript%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D/" title="AppleScript语言介绍" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                《程序开发心理学》第三篇
+                AppleScript语言介绍
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
