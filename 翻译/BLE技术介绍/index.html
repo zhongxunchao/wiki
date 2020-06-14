@@ -607,11 +607,11 @@
 本指南提供了BLE技术的概览，特别是BLE中数据的组织方式，数据如何广播，连接并通信等过程。</p>
 <h2 id="ble_1">BLE平台支持</h2>
 <p>下列大多数主流平台都是蓝牙4.0和BLE的：
-* iOS5以上（建议iOS7以上）
-* Android4.3以上（很多Bug在Android 4.4以上才修复）
-* OS X 10.6以上
-* Windows 8
-* GNU/Linux Vanilla BlueZ 4.93以上</p>
++ iOS5以上（建议iOS7以上）
++ Android4.3以上（很多Bug在Android 4.4以上才修复）
++ OS X 10.6以上
++ Windows 8
++ GNU/Linux Vanilla BlueZ 4.93以上</p>
 <h2 id="gap">GAP(通用访问配置文件)</h2>
 <p>GAP是通用访问配置文件（Generic Access Profile）的缩写，它控制着蓝牙的连接与广播。GAP使你的设备可以被外部发现，并决定了两个设备直接如何交互。</p>
 <blockquote>
@@ -619,9 +619,15 @@
 后面将补充GAP协议的内容。</p>
 </blockquote>
 <h2 id="_1">设备角色</h2>
-<p>GAP定义设备的不同角色，但是最关键的两个概念是中心设备(Central devices)和外围设备(Peripheral devices).
-* 外围设备是小的、低能耗的、资源有限的设备，它可以连接到高能耗的中心设备。外围设备就像一个包含心跳监测、BLE启动功能的东西。
-* 中心设备通常是手机或者平板电脑，具有更强的处理能力和更大内存。</p>
+<p>GAP定义设备的不同角色，但是最关键的两个概念是中心设备(Central devices)和外围设备(Peripheral devices).</p>
+<ul>
+<li>
+<p>外围设备是小的、低能耗的、资源有限的设备，它可以连接到高能耗的中心设备。外围设备就像一个包含心跳监测、BLE启动功能的东西。</p>
+</li>
+<li>
+<p>中心设备通常是手机或者平板电脑，具有更强的处理能力和更大内存。</p>
+</li>
+</ul>
 <h2 id="_2">广播和扫描数据</h2>
 <p>通过GAP协议有两种方式发送广播：广播和扫描回复数据。</p>
 <blockquote>
