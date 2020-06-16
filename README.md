@@ -9,14 +9,15 @@ mkdocs gh-deploy
 
 ##代办事项
 ###BLE部分
-* BLE与GAP协议（）
+* BLE与GAP协议（OEVR）.
 * BluetoothCore框架解析
-* BLE扫描，重连，发送过程等分析。
+* BLE扫描，重连，发送过程等分析与要点。。
 * 一个典型的BLE库解析
 * BLE的底层原理
 * BLE与智能家居
 * 尝试封装BLE的JS库
 * 微信小程序踩过的BLE坑
+* BLE的安全与隐患
 
 ###从iOS到小程序
 * iOS中编写小程序的基本框架
