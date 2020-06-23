@@ -6,6 +6,8 @@ nav:
     - iOS: 
       - 简单的计算器实现: iOS/简单的计算器.md
       - NSObject,NSProxy以及异常处理: iOS/NSObject,NSProxy以及异常处理.md
+    - 智能家居:
+      - BLE的底层原理: 智能家居/BLE的底层原理.md
     - 翻译:
       - AppleScript语言介绍: 翻译/AppleScript语言介绍.md
       - BLE技术介绍: 翻译/BLE技术介绍.md
