@@ -679,9 +679,9 @@
                 <p>我已经翻译了一篇文章：<a href="https://zhongxunchao.github.io/wiki/%E7%BF%BB%E8%AF%91/BLE%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/">BLE技术介绍</a> 
 里面介绍了BLE在GAP和GATT上的实现，这篇文章希望能够系统探索BLE从应用层到物理层的基本实现，以及其他需要补充的一些内容。最权威的资料来源于<a href="https://www.ti.com/lit/ug/swru271i/swru271i.pdf?ts=1592264196467&amp;ref_url=https%253A%252F%252Fwww.ti.com%252Ftool%252FBLE-STACK">Bluetooth Low Energy Software Developer’s Guide</a></p>
 <h2 id="_1">蓝牙协议栈描述</h2>
-<p>协议栈的层次如下：
-<img alt="BLE Protocol Stack" src="../images/image1.png" />
-那么这里涉及到2个重要的概念：host和controller。 一般而言，controller是指跑在蓝牙模块上，更底层的那部分协议栈，而host是指跑在AP芯片，更接近应用层的部分。一般的移动应用开发只需要和host打交道，而host和controller可以通过HCI协议进行通信。其他的协议栈方案请参见引用文档。</p>
+<p>协议栈的层次如下：</p>
+<p><img alt="BLE Protocol Stack" src="../images/image1.png" /></p>
+<p>那么这里涉及到2个重要的概念：host和controller。 一般而言，controller是指跑在蓝牙模块上，更底层的那部分协议栈，而host是指跑在AP芯片，更接近应用层的部分。一般的移动应用开发只需要和host打交道，而host和controller可以通过HCI协议进行通信。其他的协议栈方案请参见引用文档。</p>
 <blockquote>
 <p>HCI协议是一个传输层协议，位于蓝牙高层协议和低层协议之间，提供了对基带控制器和链路管理器的命令以及访问蓝牙硬件的统一接口,它是我们实现自己的蓝牙设备要接触的第一个蓝牙协议,起着承上启下的作用。参见：<a href="https://blog.csdn.net/hushiganghu/article/details/61919261">蓝牙HCI协议</a></p>
 </blockquote>
@@ -695,52 +695,106 @@ BLE使用跳频技术来解决频段拥挤问题,这里不多展开。</p>
 <p>BLE广播信道一共有3个，分别为37、38和39信道，频点分布分别为2402MHz、2426MHz和2480MHz，这3个信道用于发送广播信息，广播信道分散在距离较远的频段上，过度的集中会导致如果该频段受干扰严重可能广播就无法进行的情况，分散的目的是为了增加容错率。剩下的37个频点用于通信，即连接以后用于数据交流。</p>
 </blockquote>
 <h2 id="link-layer">链路层（Link Layer）</h2>
-<p>在物理层已经解决了基本的通信问题，但是蓝牙所在频段非常拥堵，干扰多，通信实体多，因此链路层需要解决以下问题：
-* 诸多通信实体的Channel共享问题；
-* 构建两个通信实体的逻辑链路(Logical Link);
-* 数据传输可能损毁、丢失，需要提供校验、重传等机制，确保数据传输的可靠性。</p>
-<p>在链路层抽象出了5种状态：
-* Standby State: 初始状态，既不发送数据，也不接收数据.
-* Advertising State: 可以通过广播通道发送数据的状态，由Standby状态进入。
-* Scanning State： 可以通过广播通道接收数据的状态，由Standby状态进入。
-* Initiaing State： 由Standby状态进入，只能接收Advertiser广播的connectable的数据，并在接收到数据后，发送连接请求，以便和Advertiser建立连接。当连接成功后，Initiater和对应的Advertiser都会切换到Connection状态。可以理解为待连接状态。
-* Connection State： 已连接状态，和实体建立了单独的通信通道。由Initiating或者Advertising自动切换而来。通道断开后，会重新回到Standby状态。
-处于Connection状态的双方，分别有2种角色：
-* Initiater方称作Master.
-* Advertiser方称作Slave.</p>
+<p>在物理层已经解决了基本的通信问题，但是蓝牙所在频段非常拥堵，干扰多，通信实体多，因此链路层需要解决以下问题：</p>
+<ul>
+<li>
+<p>诸多通信实体的Channel共享问题;</p>
+</li>
+<li>
+<p>构建两个通信实体的逻辑链路(Logical Link);</p>
+</li>
+<li>
+<p>数据传输可能损毁、丢失，需要提供校验、重传等机制，确保数据传输的可靠性。</p>
+</li>
+</ul>
+<p>在链路层抽象出了5种状态：</p>
+<ul>
+<li>
+<p>Standby State: 初始状态，既不发送数据，也不接收数据.</p>
+</li>
+<li>
+<p>Advertising State: 可以通过广播通道发送数据的状态，由Standby状态进入。</p>
+</li>
+<li>
+<p>Scanning State： 可以通过广播通道接收数据的状态，由Standby状态进入。</p>
+</li>
+<li>
+<p>Initiaing State： 由Standby状态进入，只能接收Advertiser广播的connectable的数据，并在接收到数据后，发送连接请求，以便和Advertiser建立连接。当连接成功后，Initiater和对应的Advertiser都会切换到Connection状态。可以理解为待连接状态。</p>
+</li>
+<li>
+<p>Connection State： 已连接状态，和实体建立了单独的通信通道。由Initiating或者Advertising自动切换而来。通道断开后，会重新回到Standby状态。</p>
+</li>
+</ul>
+<p>处于Connection状态的双方，分别有2种角色：</p>
+<ul>
+<li>
+<p>Initiater方称作Master.</p>
+</li>
+<li>
+<p>Advertiser方称作Slave.</p>
+</li>
+</ul>
 <blockquote>
 <p>从横向看，BLE协议栈的每个层次都是可以互相通信的实体；在每个层次上，都可能有状态定义，甚至有同名的状态。只需要多加注意即可。</p>
 </blockquote>
 <h3 id="air-interface-protocol">空中接口协议（Air Interface Protocol）</h3>
-<p>AIP定义了物理层上收发的数据包的格式,并且这种格式对于广播频段和数据频段都是适用的。
-<img alt="数据包格式" src="../images/image2.png" />
-这些格式从前到后分别为：
-* Preamble: 1 byte, 前导帧。根据物理层行为取值为0x55或者0xAA.
-* Access Address: 4 byte, 标记数据包或广播包.广播包该字段固定为0x8E89BED6.数据包的字段将是由initiator在建立连接时生成的32bit的随机值.
-* PDU： Protocol Data Unit,协议数据单元，下面将会单独描述。
-* CRC校验位：3个字节，用于校验数据是否丢失或修改。</p>
+<p>AIP定义了物理层上收发的数据包的格式,并且这种格式对于广播频段和数据频段都是适用的。</p>
+<p><img alt="数据包格式" src="../images/image2.png" /></p>
+<p>这些格式从前到后分别为：</p>
+<ul>
+<li>
+<p>Preamble: 1 byte, 前导帧。根据物理层行为取值为0x55或者0xAA.</p>
+</li>
+<li>
+<p>Access Address: 4 byte, 标记数据包或广播包.广播包该字段固定为0x8E89BED6.数据包的字段将是由initiator在建立连接时生成的32bit的随机值.</p>
+</li>
+<li>
+<p>PDU： Protocol Data Unit,协议数据单元，下面将会单独描述。</p>
+</li>
+<li>
+<p>CRC校验位：3个字节，用于校验数据是否丢失或修改。</p>
+</li>
+</ul>
 <h4 id="pdu">PDU描述</h4>
-<p><img alt="AIP数据包的另一张图" src="../images/image3.png" />
-这张图比前面一张描述的更加详细，从图中可以看到，从第3列开始的Advertising Header后连续4列即为PDU的内容。包括了：
-* Advertising Header: 1 byte，定义了PDU的type等，不再过多展开。参见：<a href="https://www.cnblogs.com/iini/p/8977806.html">BLE空口包格式</a>
-* Payload Length: 1 byte, 定义了PDU的长度。需要注意的是广播包的PDU最多为37个字节。
-* Device Address: 6个字节，即蓝牙的mac地址。所以广播包数据最长只能31个字节。（这里PDU并未计算Header和Payload Length）
-* Advertising Data: 数据包或广播包的数据。如果是广播包，该部分最大31个字节。如果是数据包，该部分最大可达257个字节。</p>
+<p><img alt="AIP数据包的另一张图" src="../images/image3.png" /></p>
+<p>这张图比前面一张描述的更加详细，从图中可以看到，从第3列开始的Advertising Header后连续4列即为PDU的内容。包括了：</p>
+<ul>
+<li>
+<p>Advertising Header: 1 byte，定义了PDU的type等，不再过多展开。参见：<a href="https://www.cnblogs.com/iini/p/8977806.html">BLE空口包格式</a></p>
+</li>
+<li>
+<p>Payload Length: 1 byte, 定义了PDU的长度。需要注意的是广播包的PDU最多为37个字节。</p>
+</li>
+<li>
+<p>Device Address: 6个字节，即蓝牙的mac地址。所以广播包数据最长只能31个字节。（这里PDU并未计算Header和Payload Length）</p>
+</li>
+<li>
+<p>Advertising Data: 数据包或广播包的数据。如果是广播包，该部分最大31个字节。如果是数据包，该部分最大可达257个字节。</p>
+</li>
+</ul>
 <p>链路层的包长度范围为9到264个字节(不计算Preamble,PDU范围2~257 Bytes).</p>
 <h3 id="_3">数据过滤机制</h3>
 <blockquote>
 <p>随着通信设备的增多，空中的广播数据将会呈几何级的增长，为了避免资源的浪费（特别是BLE Host），有必要在Link Layer过滤掉一些数据包，例如根据蓝牙地址，过滤掉不是给自己的packet。</p>
 </blockquote>
 <h3 id="link-layer-control">链路控制协议（Link Layer Control）</h3>
-<p>该协议用来管理、控制两个链路层实体的connection：
-* 更新connection参数；
-* 更新连接使用的跳频图谱，使用哪些Channels;
-* 执行链路加密相关过程。</p>
+<p>该协议用来管理、控制两个链路层实体的connection：</p>
+<ul>
+<li>
+<p>更新connection参数；</p>
+</li>
+<li>
+<p>更新连接使用的跳频图谱，使用哪些Channels;</p>
+</li>
+<li>
+<p>执行链路加密相关过程。</p>
+</li>
+</ul>
 <h2 id="hci-host-controller-interface">主机与控制器接口（HCI, Host Controller Interface）</h2>
 <p>HCI协议连接Host和Controller，将Host的操作转化为HCI指令传给Controller, BLE协议规定了HCI的指令集。
-一般而言，BLE协议栈规划的芯片实现方案有单芯片方案，双芯片方案和三芯片方案。双芯片方案会有经典的HCI协议层，表示如下：
-<img alt="双芯片方案示例" src="../images/image5.png" />
-其他的方案可能会舍弃HCI协议，Host和Controller并没有明确的界限。</p>
+一般而言，BLE协议栈规划的芯片实现方案有单芯片方案，双芯片方案和三芯片方案。双芯片方案会有经典的HCI协议层，表示如下：</p>
+<p><img alt="双芯片方案示例" src="../images/image5.png" /></p>
+<p>其他的方案可能会舍弃HCI协议，Host和Controller并没有明确的界限。</p>
 <h2 id="l2cap-logic-link-control-and-adaption-protocol">逻辑链路控制和适配协议（L2CAP, Logic Link Control and Adaption Protocol）</h2>
 <blockquote>
 <p>这是蓝牙系统的核心协议，提供了以下功能：
@@ -764,10 +818,18 @@ Logical Link Control and Adaptation Protocol也称为逻辑链路控制和适配
 <p>前面的内容描述有的较为模糊，但是最近事情非常多，并且接触到了一些新的蓝牙的feature。以后会继续完善该部分内容。</p>
 <h2 id="_4">待解决疑问</h2>
 <ul>
-<li>Bluetooth 4.0中每个包的20个字节是怎么来的？后面的协议如何扩展了该内容？</li>
-<li>如何确保BLE传输的安全性？</li>
-<li>iOS中的CTKD是什么？ </li>
-<li>Bond connection是什么？</li>
+<li>
+<p>Bluetooth 4.0中每个包的20个字节是怎么来的？后面的协议如何扩展了该内容？</p>
+</li>
+<li>
+<p>如何确保BLE传输的安全性？</p>
+</li>
+<li>
+<p>iOS中的CTKD是什么？ </p>
+</li>
+<li>
+<p>Bond connection是什么？</p>
+</li>
 </ul>
 <h2 id="_5">引用文档</h2>
 <ul>
