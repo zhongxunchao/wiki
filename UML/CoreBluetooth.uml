@@ -1,0 +1,198 @@
+@startuml
+'底层类与接口'
+class NSObject
+interface NSCopying
+
+class CBUUID {
+  +data: NSData
+  +UUIDString: NSString
+  +UUIDWithString(theString: NSString)
+  +UUIDWithData(theData: NSData)
+  +UUIDWithCFUUID(theUUID: CFUUIDRef)
+  +UUIDWithNSUUID(theUUID: NSUUID)
+}
+CBUUID --|> NSObject
+CBUUID ..|> NSCopying
+
+'中间层CBPeer和CBAttribute'
+class CBAttribute {
+    +init(): instancetype
+    +UUID: CBUUID
+}
+CBAttribute o-- CBUUID
+
+class CBPeer {
+    +init(): instancetype
+    +identifier: NSUUID
+}
+CBPeer --|> NSObject
+CBPeer ..|> NSCopying
+CBPeer o-- CBUUID
+
+class CBDescriptor {
+  +characteristic: CBCharacteristic
+  +value: id
+}
+CBDescriptor --|> CBAttribute
+CBDescriptor o-- CBCharacteristic
+
+
+class CBCharacteristic {
+  +service: CBService
+  +properties: CBCharacteristicProperties
+  +value: NSData
+  +descriptors: [CBDescriptor]
+  +isBroadcasted: BOOL
+  +isNotifying: BOOL
+}
+CBCharacteristic --|> CBAttribute
+CBCharacteristic o-- CBDescriptor
+CBCharacteristic o-- CBService
+
+class CBService {
+  +peripheral: CBPeripheral
+  +isPrimary: BOOL
+  +includedServices: [CBService]
+  +characteristics: [CBCharacteristic]
+}
+CBService --|> CBAttribute
+CBService o-- CBPeripheral
+CBService o-- CBCharacteristic
+
+interface CBPeripheralDelegate {
+    +peripheralDidUpdateName(peripheral: CBPeripheral)
+    +didModifyServices(peripheral: CBPeripheral, invalidatedServices: [CBService])
+    +peripheralDidUpdateRSSI(peripheral: CBPeripheral, error: NSError)
+    +didReadRSSI(peripheral: CBPeripheral, RSSI: NSNumber, error: NSError)
+    +didDiscoverServices(peripheral: CBPeripheral, error: NSError)
+    +didDiscoverIncludedServicesForService(peripheral: CBPeripheral, service: CBService, error: NSError)
+    +didDiscoverCharacteristicsForService(peripheral: CBPeripheral, service: CBService, error: NSError)
+    +didUpdateValueForCharacteristic(peripheral: CBPeripheral, characteristic: CBCharacteristic, error: NSError)
+    +didWriteValueForCharacteristic(peripheral: CBPeripheral, characteristic: CBCharacteristic, error: NSError)
+    +didUpdateNotificationStateForCharacteristic(peripheral: CBPeripheral, characteristic: CBCharacteristic, error: NSError)
+    +didDiscoverDescriptorsForCharacteristic(peripheral: CBPeripheral, characteristic: CBCharacteristic, error: NSError)
+    +didUpdateValueForDescriptor(peripheral: CBPeripheral, descriptor: CBDescriptor, error: NSError)
+    +didWriteValueForDescriptor(peripheral: CBPeripheral, descriptor: CBDescriptor, error: NSError)
+    +peripheralIsReadyToSendWriteWithoutResponse(peripheral: CBPeripheral)
+    +didOpenL2CAPChannel(peripheral: CBPeripheral, channel: CBL2CAPChannel, error: NSError)
+}
+
+class CBPeripheral {
+   +delegate: CBPeripheralDelegate
+   +name: NSString
+   +RSSI: NSNumber
+   +state: CBPeripheralState
+   +services: [CBService]
+   +canSendWriteWithoutResponse: BOOL
+   +ancsAuthorized: BOOL
+   +readRSSI()
+   +discoverServices(serviceUUIDs: [CBUUID])
+   +discoverIncludedServices(includedServiceUUIDs: [CBUUID], service: CBService)
+   +discoverCharacteristics(characteristicUUIDs: [CBUUID], service: CBService)
+   +readValueForCharacteristic(characteristic: CBCharacteristic)
+   +maximumWriteValueLengthForType(type: CBCharacteristicWriteType): NSUInteger
+   +writeValue(data: NSData, characteristic: CBCharacteristic, type: CBCharacteristicWriteType)
+   +setNotifyValue(enabled: BOOL, characteristic: CBCharacteristic)
+   ......
+}
+CBPeripheral --|> CBPeer
+CBPeripheral o-- CBPeripheralDelegate
+
+class CBCentral {
+  +maximumUpdateValueLength: NSUInteger
+}
+CBCentral --|> CBPeer
+CBCentral <-- CBPeripheralManager
+CBCentral <-- CBPeripheralManagerDelegate
+
+interface CBPeripheralManagerDelegate {
+    +peripheralManagerDidUpdateState(peripheral: CBPeripheralManager)
+    +willRestoreState(peripheral: CBPeripheralManager, dict: NSDictionary)
+    +peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager, error: NSError)
+    +didAddService(peripheral: CBPeripheralManager, service: CBService, error: NSError)
+    +didSubscribeToCharacteristic(peripheral: CBPeripheralManager, central: CBCentral, characteristic: CBCharacteristic)
+    +didUnsubscribeFromCharacteristic(peripheral: CBPeripheralManager, central: CBCentral, characteristic: CBCharacteristic)
+    +didReceiveReadRequest(peripheral: CBPeripheralManager, request: CBATTRequest)
+    +didReceiveWriteRequests(peripheral: CBPeripheralManager, requests: [CBATTRequest])
+    +peripheralManagerIsReadyToUpdateSubscribers(peripheral: CBPeripheralManager)
+    +didPublishL2CAPChannel(peripheral: CBPeripheralManager, PSM: CBL2CAPPSM, error: NSError)
+    +didUnpublishL2CAPChannel(peripheral: CBPeripheralManager, PSM: CBL2CAPPSM, error: NSError)
+    +didOpenL2CAPChannel(peripheral: CBPeripheralManager, PSM: CBL2CAPPSM, error: NSError)
+}
+
+class CBL2CAPChannel {
+    +peer: CBPeer
+    +inputStream: NSInputStream
+    +outputStream: NSOutputStream
+    +PSM: CBL2CAPPSM
+}
+CBL2CAPChannel --|> NSObject
+CBL2CAPChannel <-- CBPeripheral
+
+'Represents a read or write request from a central.'
+class CBATTRequest {
+  +init(): instancetype
+  +central: CBPeripheral
+  +characteristic: CBCharacteristic
+  +offset: NSUInteger
+  +value: NSData
+}
+CBATTRequest --|> NSObject
+CBATTRequest <-- CBPeripheralManager
+CBATTRequest <-- CBPeripheralManagerDelegate
+
+class CBManager {
+  +init(): instancetype
+  +state: CBManagerState
+  +authorization: CBManagerAuthorization
+}
+CBManager --|> NSObject
+
+class CBPeripheralManager {
+    +delegate: CBPeripheralManagerDelegate
+    +isAdvertising: BOOL
+    +authorizationStatus(CBPeripheralManagerAuthorizationStatus)
+    +initWithDelegate(delegate: CBPeripheralManagerDelegate, queue: dispatch_queue_t)
+    +initWithDelegate(delegate: CBPeripheralManagerDelegate, queue: dispatch_queue_t, options: NSDictionary)
+    +startAdvertising(advertisementData: NSDictionary)
+    +stopAdvertising()
+    +setDesiredConnectionLatency(latency: CBPeripheralManagerConnectionLatency, central: CBCentral)
+    +addService(service: CBMutableService)
+    +removeService(service: CBMutableService)
+    +removeAllServices()
+    +respondToRequest(request: CBATTRequest, result: CBATTError)
+    +updateValue(value: NSData, characteristic: CBMutableCharacteristic, centrals: [CBCentral])
+    +publishL2CAPChannelWithEncryption(encryptionRequired: BOOL)
+    +unpublishL2CAPChannel(PSM: CBL2CAPPSM)
+}
+CBPeripheralManager --|> CBManager
+CBPeripheralManager o-- CBPeripheralManagerDelegate
+
+interface CBCentralManagerDelegate {
+    +centralManagerDidUpdateState(central: CBCentralManager)
+    +willRestoreState(central: CBCentralManager, dict: NSDictionary)
+    +didDiscoverPeripheral(central: CBCentralManager, peripheral: CBPeripheral, advertisementData: NSDictionary, RSSI: NSNumber)
+    +didConnectPeripheral(central: CBCentralManager, peripheral: CBPeripheral)
+    +didFailToConnectPeripheral(central: CBCentralManager, peripheral: CBPeripheral, error: NSError)
+    +didDisconnectPeripheral(central: CBCentralManager, peripheral: CBPeripheral, error: NSError)
+    +connectionEventDidOccur(central: CBCentralManager, event: CBConnectionEvent, peripheral: CBPeripheral)
+    +didUpdateANCSAuthorizationForPeripheral(central: CBCentralManager, peripheral: CBPeripheral)
+}
+class CBCentralManager {
+    +delegate: CBCentralManagerDelegate
+    +isScanning: BOOL
+    +supportsFeatures(features: CBCentralManagerFeature): BOOL
+    +init(): instancetype
+    +initWithDelegate(delegate: CBCentralManagerDelegate, queue: dispatch_queue_t): instancetype 
+    +initWithDelegate(delegate: CBCentralManagerDelegate, queue: dispatch_queue_t, options: NSDictionary): instancetype
+    +retrievePeripheralsWithIdentifiers(identifiers: [NSUUID]): [CBPeripheral]
+    +retrieveConnectedPeripheralsWithServices(serviceUUIDs: [CBUUID]): [CBPeripheral]
+    +scanForPeripheralsWithServices(serviceUUIDs: [CBUUID], options: NSDictionary)
+    +stopScan()
+    +connectPeripheral(peripheral: CBPeripheral, options: NSDictionary)
+    +cancelPeripheralConnection(peripheral: CBPeripheral)
+    +registerForConnectionEventsWithOptions(options: NSDictionary)
+}
+CBCentralManager --|> CBManager
+CBCentralManager o-- CBCentralManagerDelegate
+@enduml

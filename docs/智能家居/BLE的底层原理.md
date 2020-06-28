@@ -122,7 +122,7 @@ Logical Link Control and Adaptation Protocol也称为逻辑链路控制和适配
 
 * Bluetooth 4.0中每个包的20个字节是怎么来的？后面的协议如何扩展了该内容？
 
-* 如何确保BLE传输的安全性？
+* 如何确保BLE传输的安全性？(参考:[BLE安全机制](https://www.cnblogs.com/crazyprince/p/10342236.html))
 
 * iOS中的CTKD是什么？ 
 
