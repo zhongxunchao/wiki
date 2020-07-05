@@ -88,7 +88,7 @@ CoreBluetooth是iOS系统提供的关于BLE（低功耗蓝牙）交互的框架�
 当然这种很繁琐的代理方法必然不是大多数开发者喜欢的，使用起来非常不方便。比如要连接一个已经知道Service和Characteristic的UUID的设备，我不得不实现很多个代理方法。或者说部分Service是加密的，连接之前必须经过认证，那么后期的连接订阅就非常麻烦。所以后面我也会介绍一些BLE框架的实现思路，以及自己构思的js的BLE库的实现。
 
 ##CoreBluetooth的框架概览
-![CoreBluetooth类图](../../out/UML/CoreBluetooth/CoreBluetooth.png)
+![CoreBluetooth类图](./images/CoreBluetooth.png)
 
 上面是我绘制的CoreBluetooth的类图，基本包含了所有用到的类。当我绘制完成这张图的时候，便发现了很多知识的漏洞，定期的梳理是非常有必要的。
 ### CBUUID
@@ -184,8 +184,11 @@ typedef NS_ENUM(NSInteger, CBCharacteristicWriteType) {
 这个函数返回了对特定类型Characteristic的最大数据长度。
 但是我认为这个方法里面有3个疑问：
 * 1. 对于不同的Characteristic这个可写的length是否可能不同？
+
 * 2. 为什么不同的CBCharacteristicWriteType参数可能得到不同的返回结果？
+
 * 3. 发送和接收的数据的最大长度是否总是一致的？
+
 我查阅了国内外一些资料，并没有发现能够很清晰的解决这些疑问的。
 
 对于第一个疑问，个人的理解是这个可写长度实质上取决于ATT的MTU的限制，那么该最大长度应该对于不同的特性应该是一致的，因为GATT协议处于协议栈的最上层了。同时根据这个解释，发送和接收的数据的最大长度也应该是一致的。
