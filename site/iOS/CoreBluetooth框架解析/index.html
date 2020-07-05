@@ -1,0 +1,1174 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>CoreBluetooth框架解析 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ble" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="My Docs" class="md-header-nav__button md-logo" aria-label="My Docs">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            My Docs
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              CoreBluetooth框架解析
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../index.md" title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      iOS
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="iOS" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        iOS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E7%AE%80%E5%8D%95%E7%9A%84%E8%AE%A1%E7%AE%97%E5%99%A8/" title="简单的计算器实现" class="md-nav__link">
+      简单的计算器实现
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../NSObject%2CNSProxy%E4%BB%A5%E5%8F%8A%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="NSObject,NSProxy以及异常处理" class="md-nav__link">
+      NSObject,NSProxy以及异常处理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        CoreBluetooth框架解析
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="CoreBluetooth框架解析" class="md-nav__link md-nav__link--active">
+      CoreBluetooth框架解析
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ble" class="md-nav__link">
+    一般的BLE实现
+  </a>
+  
+    <nav class="md-nav" aria-label="一般的BLE实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-cbcentralmanager" class="md-nav__link">
+    1. 初始化CBCentralManager并且设置代理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 开始扫描设备
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3. 获取设备列表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4. 连接设备
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-cbservice" class="md-nav__link">
+    5. 发现设备的CBService
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-cbcharateristic" class="md-nav__link">
+    6. 发现CBCharateristic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-cbcharacteristic" class="md-nav__link">
+    7. 发现CBCharacteristic成功的回调
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    8. 接收设备的数据
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#corebluetooth" class="md-nav__link">
+    CoreBluetooth的框架概览
+  </a>
+  
+    <nav class="md-nav" aria-label="CoreBluetooth的框架概览">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cbuuid" class="md-nav__link">
+    CBUUID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbattribute" class="md-nav__link">
+    CBAttribute
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbpeer" class="md-nav__link">
+    CBPeer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbservice-cbcharacteristiccbdescriptor" class="md-nav__link">
+    CBService, CBCharacteristic和CBDescriptor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbperipheralcbperipheraldelegate" class="md-nav__link">
+    CBPeripheral和CBPeripheralDelegate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbmanager" class="md-nav__link">
+    CBManager
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbcentralmanagercbcentralmanagerdelegate" class="md-nav__link">
+    CBCentralManager和CBCentralManagerDelegate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbattrequest" class="md-nav__link">
+    CBAttRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbperipheralmanagercbperipheralmanagerdelegate" class="md-nav__link">
+    CBPeripheralManager和CBPeripheralManagerDelegate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    参考资料
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    待解决问题：
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      智能家居
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="智能家居" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        智能家居
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/BLE%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" title="BLE的底层原理" class="md-nav__link">
+      BLE的底层原理
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      翻译
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="翻译" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        翻译
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E7%BF%BB%E8%AF%91/AppleScript%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D/" title="AppleScript语言介绍" class="md-nav__link">
+      AppleScript语言介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E7%BF%BB%E8%AF%91/BLE%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/" title="BLE技术介绍" class="md-nav__link">
+      BLE技术介绍
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      读书笔记
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="读书笔记" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        读书笔记
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%B8%80%E7%AF%87/" title="《程序开发心理学》第一篇" class="md-nav__link">
+      《程序开发心理学》第一篇
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%BA%8C%E7%AF%87/" title="《程序开发心理学》第二篇" class="md-nav__link">
+      《程序开发心理学》第二篇
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%B8%89%E7%AF%87/" title="《程序开发心理学》第三篇" class="md-nav__link">
+      《程序开发心理学》第三篇
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E5%9B%9B%E7%AF%87/" title="《程序开发心理学》第四篇" class="md-nav__link">
+      《程序开发心理学》第四篇
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D%E3%80%8B%E7%AC%94%E8%AE%B0/" title="《人月神话》笔记" class="md-nav__link">
+      《人月神话》笔记
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ble" class="md-nav__link">
+    一般的BLE实现
+  </a>
+  
+    <nav class="md-nav" aria-label="一般的BLE实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-cbcentralmanager" class="md-nav__link">
+    1. 初始化CBCentralManager并且设置代理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 开始扫描设备
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3. 获取设备列表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4. 连接设备
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-cbservice" class="md-nav__link">
+    5. 发现设备的CBService
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-cbcharateristic" class="md-nav__link">
+    6. 发现CBCharateristic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-cbcharacteristic" class="md-nav__link">
+    7. 发现CBCharacteristic成功的回调
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    8. 接收设备的数据
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#corebluetooth" class="md-nav__link">
+    CoreBluetooth的框架概览
+  </a>
+  
+    <nav class="md-nav" aria-label="CoreBluetooth的框架概览">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cbuuid" class="md-nav__link">
+    CBUUID
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbattribute" class="md-nav__link">
+    CBAttribute
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbpeer" class="md-nav__link">
+    CBPeer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbservice-cbcharacteristiccbdescriptor" class="md-nav__link">
+    CBService, CBCharacteristic和CBDescriptor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbperipheralcbperipheraldelegate" class="md-nav__link">
+    CBPeripheral和CBPeripheralDelegate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbmanager" class="md-nav__link">
+    CBManager
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbcentralmanagercbcentralmanagerdelegate" class="md-nav__link">
+    CBCentralManager和CBCentralManagerDelegate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbattrequest" class="md-nav__link">
+    CBAttRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cbperipheralmanagercbperipheralmanagerdelegate" class="md-nav__link">
+    CBPeripheralManager和CBPeripheralManagerDelegate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    参考资料
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    待解决问题：
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                  <h1>CoreBluetooth框架解析</h1>
+                
+                <p>CoreBluetooth是iOS系统提供的关于BLE（低功耗蓝牙）交互的框架，希望这篇文章能够带你看一看CoreBluetooth框架是如何构建的，以及一些可能忽视的细节。
+在收看这篇文章之前，希望你对GATT/GAP协议已经有足够的了解；如果你是BLE的初学者，可以先看看我的翻译：
+<a href="https://zhongxunchao.github.io/wiki/%E7%BF%BB%E8%AF%91/BLE%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/">BLE技术介绍</a></p>
+<h2 id="ble">一般的BLE实现</h2>
+<p>网上已经有很多iOS上BLE快速集成的方案,我找到了其中一篇：
+<a href="https://www.jianshu.com/p/244668e2c959">iOS BLE开发</a>
+可以看到，在一般的BLE开发中，app都是作为center设备，也会用到2个重要的类：CBCentralManager和CBPeripheral.</p>
+<h3 id="1-cbcentralmanager">1. 初始化CBCentralManager并且设置代理</h3>
+<pre><code>    self.centerManager = [[CBCentralManager alloc]initWithDelegate:self queue:nil];
+    self.centerManager.delegate  = self;
+</code></pre>
+
+<h3 id="2">2. 开始扫描设备</h3>
+<pre><code> [self.centerManager scanForPeripheralsWithServices:nil options:@{CBCentralManagerScanOptionAllowDuplicatesKey:[NSNumber numberWithInt:1],CBCentralManagerOptionShowPowerAlertKey:[NSNumber numberWithInt:1]}];
+</code></pre>
+
+<h3 id="3">3. 获取设备列表</h3>
+<p>在CBCentralDelegate的一个方法里获取到CBPeripheral.</p>
+<pre><code>-(void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary&lt;NSString *,id&gt; *)advertisementData RSSI:(NSNumber *)RSSI{}
+</code></pre>
+
+<p>每当发现新设备就会进入上面的代理方法，一般而言可以新设备放到一个数组，记得在适当的时机停止扫描。</p>
+<h3 id="4">4. 连接设备</h3>
+<p>从上面获得的设备列表中选择一个CBPeripheral对象，并进行连接。</p>
+<pre><code>[self.centerManager connectPeripheral:peripheral options:nil];
+</code></pre>
+
+<h3 id="5-cbservice">5. 发现设备的CBService</h3>
+<pre><code>// 连接设备成功后，发现相关的CBService
+- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
+    peripheral.delegate = self;
+    [peripheral discoverServices:@[[self.class serviceUUID]]];
+}
+</code></pre>
+
+<h3 id="6-cbcharateristic">6. 发现CBCharateristic</h3>
+<p>这里要注意到一个区别，我们在扫描和连接的过程中，都使用了CBCentralManager对象或者代理方法。但是当设备连接成功后，接下来的CBService和CBCharacteristic将与Centeral设备无关，而是通过CBPeripheral的代理方法继续推进。因此在第5步中我们设置了CBPhripheral的代理对象。
+接下来的推进将以CBPhripheralDelegate为主。在发现CBService成功后，将继续发现CBService包含的CBCharacteristic.</p>
+<pre><code>-(void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
+        for (CBService *service in peripheral.services)
+    {
+        if ([service.UUID isEqual:[self.class serviceUUID]])
+        {
+            [_peripheral discoverCharacteristics:@[[self.class receiveDataCharacteristicUUID], [self.class sendDataToBandCharacteristicUUID]] forService:service];
+        }
+    }
+}
+</code></pre>
+
+<h3 id="7-cbcharacteristic">7. 发现CBCharacteristic成功的回调</h3>
+<p>当发现BLE特性成功之后，这个连接就成功建立起来了。同时我们要将这个CBCharacteristic保存下来，因为它将是我们读写数据的关键。
+这里有一个小小的细节，CoreBluetooth并没有直接在代理方法中将CBCharacteristic暴露出来，因为CBCharacteristic是CBService的属性，所以可以从CBService中获得。
+我对iOS这种封装方式持保留意见，一个CBService可以包含多个CBCharacteristic,但是同时CBChaacteritic中也会指明所属的CBService, 因此发现CBCharacteristic的回调直接使用CBCharacteristic可能更加合理，也避免了开发者必须去CBService中进行for循环以获得相应的特性。</p>
+<pre><code>-(void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
+{
+    for (CBCharacteristic *characteristic in service.characteristics)
+    {
+        if ([characteristic.UUID isEqual:[self.class receiveDataCharacteristicUUID]])
+        {
+            _receiveDataFramBandCharacteristic = characteristic;
+            [_peripheral setNotifyValue:YES forCharacteristic:_receiveDataFramBandCharacteristic];
+
+        }
+        else
+        {
+           _sendDataToBandCharacteristic = characteristic;
+        }
+    }
+}
+</code></pre>
+
+<h3 id="8">8. 接收设备的数据</h3>
+<p>事实上，在获取到相应的CBCharacteristic之后，就可以轻松的向设备发送数据了。前提是我们已经将CBPeripheral和CBCharacteristic都保存了下来。</p>
+<pre><code>[peripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithoutResponse];
+</code></pre>
+
+<p>但是如何接收设备的数据呢？注意前一步中我们开启了对特性的数据监听，这样才能进入下面的代理方法：</p>
+<pre><code>- (void) peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{ 
+    NSLog(@&quot;Did update value for characteristicValue: %@\n&quot;, characteristic.value);
+}
+</code></pre>
+
+<p>这样我们已经完成了BLE交互的所有必须步骤：扫描设备，建立BLE连接，发送和接收数据等。
+当然这种很繁琐的代理方法必然不是大多数开发者喜欢的，使用起来非常不方便。比如要连接一个已经知道Service和Characteristic的UUID的设备，我不得不实现很多个代理方法。或者说部分Service是加密的，连接之前必须经过认证，那么后期的连接订阅就非常麻烦。所以后面我也会介绍一些BLE框架的实现思路，以及自己构思的js的BLE库的实现。</p>
+<h2 id="corebluetooth">CoreBluetooth的框架概览</h2>
+<p><img alt="CoreBluetooth类图" src="../../out/UML/CoreBluetooth/CoreBluetooth.png" /></p>
+<p>上面是我绘制的CoreBluetooth的类图，基本包含了所有用到的类。当我绘制完成这张图的时候，便发现了很多知识的漏洞，定期的梳理是非常有必要的。</p>
+<h3 id="cbuuid">CBUUID</h3>
+<p>在GATT协议中，Service, Characteristic, Descriptor都有这着相应的UUID，虽然它只是一个2个（官方）或16个（自定义）字节的数据，但是把它抽象出来是很有必要的。它是服务或特性的唯一ID.</p>
+<h3 id="cbattribute">CBAttribute</h3>
+<p>Attribute（属性）是ATT协议的核心。它是一种数据结构，包含Handle, UUID， Value等信息。</p>
+<blockquote>
+<p>属性句柄（Attribute Handle）是一个2字节的十六进制码，起始于0x0001，在系统初始化时候，各个属性的句柄逐步加一，最大不超过0xFFFF。这个跟软件编程中的句柄的概念类似，就是某个属性值的查询地址。
+属性类型（Attribute Type）用以区分当前属性是服务项或是特征值等，它用UUID来表示。UUID（universally unique identifier，通用唯一识别码）是一个软件构建标准，并非BLE独有的概念，一个合法的UUID，一定是随机的、全球唯一的，不应该出现两个相同的UUID（出现了，就说明它们俩是同一个UUID）。标准的UUID是一串16字节十六进制字符串，如f6257d37-34e5-41dd-8f40-e308210498b4，在网上可以方便的生成一个UUID。
+属性值（Attribute Value）是存放数据的地方。如果是服务项或者特征值声明，该数据为UUID等信息，如果是普通的特征值，该数据则是用户的数据。</p>
+</blockquote>
+<p>但是CoreBluetooth在CBAttribute中只暴露了UUID信息，或许是认为Handle和Value对开发者并不是必须用到的，所以没有作为CBAttribute的property.</p>
+<h3 id="cbpeer">CBPeer</h3>
+<p>CBPeer是对等网络（P2P）中设备的抽象，在BLE中设备与设备之间并不是对等的，天然的划分为central设备和peripheral, 或者client和server。但是对于这种设备的抽象是很有必要的，它可以描述central和peripheral的一些共性。
+在CoreBluetooth中，CBPeer只暴露了一个CBUUID作为设备的Identifier, 所以它的接口和CBAttribute是非常像的。这也反映了在软件项目中，概念的清晰比代码冗余更加重要。</p>
+<h3 id="cbservice-cbcharacteristiccbdescriptor">CBService, CBCharacteristic和CBDescriptor</h3>
+<p>由于Service，Characteristic和Descriptor在GATT协议中都有着明确的定义，因此是易于理解的。
+每个Service包含一个或多个Characteristic, 每个Characteristic包含一个或者多个Descriptor.
+这三个类都继承于CBAttribute, CBService和CBCharacteristic是互相关联的：CBService中包含一个CBCharacteristic的数组，CBCharacteristic也有一个CBService指向所属的服务。同样的道理，CBCharacteristic和CBDescriptor也是互相关联的。</p>
+<blockquote>
+<p>关于Descriptor
+  一个characteristic包含三种条目：characteristic 声明(Declaration)，characteristic的值(Value)，以及characteristic的描述符(Descriptor)（可以有多个描述符）.Descriptor描述了数据的额外信息，比如温度的单位是什么。CCCD是一种特殊的Descriptor，可以用来打开或关闭特性的Notify功能。</p>
+</blockquote>
+<h3 id="cbperipheralcbperipheraldelegate">CBPeripheral和CBPeripheralDelegate</h3>
+<p>对于一个外设Peripheral而言, 大部分CBPeripheral或者CBPeripheralDelegate里面的方法都是不言而喻的。外设可以主动调用的方法在CBPeripheral的实例方法里，回调的方法在CBPeripheralDelegate里。
+我们先看看CBPeripheral中容易理解的方法或属性：</p>
+<pre><code>// CBPeripheralDelegate代理对象.
+@property(weak, nonatomic, nullable) id&lt;CBPeripheralDelegate&gt; delegate;
+// 外设名称
+@property(retain, readonly, nullable) NSString *name;
+// 外设的RSSI强度
+@property(retain, readonly, nullable) NSNumber *RSSI;
+// 外设的连接状态
+@property(readonly) CBPeripheralState state;
+// 是否可以发送无响应的消息。
+@property(readonly) BOOL canSendWriteWithoutResponse;
+// 外设包含的所有Service，而Characteristic包含在Service内。
+@property(retain, readonly, nullable) NSArray&lt;CBService *&gt; *services;
+// 在设备已经建立连接时，主动读取RSSI值
+- (void)readRSSI;
+// 发现设备的Services。
+- (void)discoverServices:(nullable NSArray&lt;CBUUID *&gt; *)serviceUUIDs;
+// 发现Service下面包含的Characteristic。
+- (void)discoverCharacteristics:(nullable NSArray&lt;CBUUID *&gt; *)characteristicUUIDs forService:(CBService *)service;
+// 主动读取Characteristic的值。
+- (void)readValueForCharacteristic:(CBCharacteristic *)characteristic;
+// 向Characteristic写入数据.
+- (void)writeValue:(NSData *)data forCharacteristic:(CBCharacteristic *)characteristic type:(CBCharacteristicWriteType)type;
+// 设置监听Characteristic, 同时该方法也会影响该CBCharacteristic的isNotifying属性。
+- (void)setNotifyValue:(BOOL)enabled forCharacteristic:(CBCharacteristic *)characteristic;
+// 发现Characteristic下的Descriptor。
+- (void)discoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic;
+// 主动读取Descriptor的数据。
+- (void)readValueForDescriptor:(CBDescriptor *)descriptor;
+// 主动更改Descriptor的值。
+- (void)writeValue:(NSData *)data forDescriptor:(CBDescriptor *)descriptor;
+</code></pre>
+
+<p>写到这里我发现对每个函数都用中文描述一遍没有必要，因此接下来我将考察我认为比较难懂的地方。</p>
+<pre><code>@property(readonly) BOOL ancsAuthorized;
+</code></pre>
+
+<blockquote>
+<p>ANCS(Apple Notification Center Service)即Apple通知中心服务,是让周边蓝牙设备（手环、手表等）可以通过低功耗蓝牙访问IOS设备（iphone、ipad等）上的各类通知提供的一种简单方便的机制。
+注意和APNS进行区分。
+<strong>APNS的实现主要在硬件端，一般并不需要App做任何操作。</strong>
+参考：<a href="https://www.jianshu.com/p/2ddf76ab85b0">ANCS协议分析</a></p>
+</blockquote>
+<p>ANCS不需要App改动任何代码，只要App正常的完成BLE连接即可，硬件会完成（支持）绑定认证的操作。因此该属性是标记该外设是否已经完成ANCS认证。</p>
+<pre><code>- (void)discoverIncludedServices:(nullable NSArray&lt;CBUUID *&gt; *)includedServiceUUIDs forService:(CBService *)service;
+</code></pre>
+
+<p>在GATT协议中，所有的Service可以分为2种：
+- 主要服务（Primary Service）:拥有基本功能的服务,可被其他服务包含,可以通过Primary Service Discovery过程来发现
+- 次要服务(Secondary Service):仅用来被Primary/Other Secondary Service、高层协议引用的服务,不会被Central设备发现。</p>
+<blockquote>
+<p>当一个服务需要用到别的服务里面的某些值的时候，也可以通过«Include»来完成。
+然而， «Include»一定是在服务声明之后才能使用的，那么服务声明有两种方式，首要服务可以引用另一个首要服务。首要服务也可以引用一个次要服务，从而使用次要服务公开行为。次要服务可以引用一个次要服务或者首要服务。不过次要服务引用次要服务情况很少，次要引用首要服务就更少了。
+参考：<a href="https://blog.csdn.net/yk150915/article/details/87618584">GATT服务构成</a></p>
+</blockquote>
+<p>现在我们可以解释该方法的作用：它允许我们去发现某个Service内部的引用的其他Service。</p>
+<pre><code>- (NSUInteger)maximumWriteValueLengthForType:(CBCharacteristicWriteType)type;
+</code></pre>
+
+<p>看以下这个WriteType的定义,其含义无需多说：</p>
+<pre><code>typedef NS_ENUM(NSInteger, CBCharacteristicWriteType) {
+    CBCharacteristicWriteWithResponse = 0,
+    CBCharacteristicWriteWithoutResponse,
+};
+</code></pre>
+
+<p>这个函数返回了对特定类型Characteristic的最大数据长度。
+但是我认为这个方法里面有3个疑问：
+* 1. 对于不同的Characteristic这个可写的length是否可能不同？
+* 2. 为什么不同的CBCharacteristicWriteType参数可能得到不同的返回结果？
+* 3. 发送和接收的数据的最大长度是否总是一致的？
+我查阅了国内外一些资料，并没有发现能够很清晰的解决这些疑问的。</p>
+<p>对于第一个疑问，个人的理解是这个可写长度实质上取决于ATT的MTU的限制，那么该最大长度应该对于不同的特性应该是一致的，因为GATT协议处于协议栈的最上层了。同时根据这个解释，发送和接收的数据的最大长度也应该是一致的。
+第二个问题, stackoverflow上的一个<a href="https://stackoverflow.com/questions/41289783/what-does-peripheral-maximumwritevaluelengthfortypecbcharacteristicwritewithre">回答</a>只是说我们应该尽可能避免发送超出这个最大值的数据，同时对于WithResponse类型的特性，可能会返回512. 我将测试对于WithoutResponse类型会返回多少。
+ <font color='red'> WARNING: 对于该方法的说明待完善。</font></p>
+<p><code>- (void)openL2CAPChannel:(CBL2CAPPSM)PSM;</code>
+这个函数让我比较困扰，L2CAP是BLE协议栈中非常重要的一层，但是在一般的BLE开发中，这一层的数据都已经封装好了。所以我花了很多时间尝试理解该函数的使用场景。
+L2CAP层解决了一个重要的问题，就是协议/信道的多路复用。同时提供了两种多路复用的手段：基于连接的多路复用和无连接的方法。
+PSM，即Protocol/Service Multiplexing, 是无连接复用中的一个字段，可以把它当作CID(Channel ID)的一种替代。
+那么该函数就是可以（基于无连接的方式？）打开新的L2CAP信道。而PSM是CBL2CAPChannel类的一个属性。在一般的BLE开发中，都会通过Characteristic去发送和接收数据，而在外设主动放开L2CAP信道的情况下，Central设备和外设是可以以数据流的方式直接进行通信的。此时Central设备就要调用该函数去打开该Channel。
+ <font color='red'>这也是我未曾实现的内容，我将通过2个iOS App来测试该功能.</font></p>
+<h3 id="cbmanager">CBManager</h3>
+<p>前面提到一般BLE的开发时，主要用到两个类：CBCentralManager和CBPeripheral.
+在思考iOS对于CoreBluetooth的设计时，一个有趣的点是框架将CBCentral和CBCentralManager区分开，CBPeripheral和CBPeripheralManager同样如此。理解了这样的设计逻辑，我们才能知道CBManager在框架中的作用。
+以我的理解看，CBCentral在框架中的作用是非常弱的，几乎不会用到，或者说，它是可以被CBCentralManager完全替代的。设想一个iOS app初始化一个Central（可能是单例）然后设置CentralDelegate来监听Central设备的各种变化，看上去也是可行的。
+而CBPeripheral和CBPeripheralManager却并非可以互相替代的。比如CBPeripheral包含了发现Service和Characteristic和读写数据的方法，而CBPeripheralManager描述了如果一个iOS App想要作为Peripheral而不是Central设备，应该如何去广播，构建Service等内容。而Central设备不需要这些构建，因此CBCentral看起来根本没做什么事。
+回过头来看CBManager作为CBCentralManager和CBPeripheralManager抽象出来的父类，包含了打开/关闭等状态以及认证相关的属性；再次思考一下，这些属性作为设备的一个属性也是可行的，比如加入到CBPeer里面。但是这样一来，将CBPeripheral和CBPeripheralManager合并的话，里面包含的方法会非常广泛，而逻辑仍然是自洽的。</p>
+<h3 id="cbcentralmanagercbcentralmanagerdelegate">CBCentralManager和CBCentralManagerDelegate</h3>
+<pre><code>- (NSArray&lt;CBPeripheral *&gt; *)retrievePeripheralsWithIdentifiers:(NSArray&lt;NSUUID *&gt; *)identifiers;
+</code></pre>
+
+<p>重连已知的 peripheral 列表中的 peripheral,这些外设是已经发现或者已经连接过的。</p>
+<pre><code>- (void)registerForConnectionEventsWithOptions:(nullable NSDictionary&lt;CBConnectionEventMatchingOption, id&gt; *)options;
+</code></pre>
+
+<p>会对连接的Event进行注册和监控，如果Event发生，将会在CBCentralManagerDelegate里面的centralManager:connectionEventDidOccur:forPeripheral:进行响应。
+这些Event包括：</p>
+<pre><code>typedef NS_ENUM(NSInteger, CBConnectionEvent) {
+    CBConnectionEventPeerDisconnected = 0,
+    CBConnectionEventPeerConnected  = 1,
+};
+</code></pre>
+
+<p><strong>CBCentralManagerDelegate</strong></p>
+<pre><code>- (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary&lt;NSString *, id&gt; *)dict;
+</code></pre>
+
+<p>当app即将进入后台或者被唤醒时，可以获取需要恢复的的CBCentralManager状态数据。参见：
+<a href="https://www.dazhuanlan.com/2020/01/21/5e2704fb6b8df/">CoreBluetooth的后台工作模式</a>
+该后台模式值得进一步探究。</p>
+<pre><code>- (void)centralManager:(CBCentralManager *)central didUpdateANCSAuthorizationForPeripheral:(CBPeripheral *)peripheral;
+</code></pre>
+
+<p>参考前面对于ANCS的解释，即当一个ANCS设备的认证状态发生变化时，该方法将被调用。</p>
+<h3 id="cbattrequest">CBAttRequest</h3>
+<p>代表了来自central设备的一个读或者写数据的请求。
+GATT协议中定义了Server/Client的概念，外部设备(Peripheral)又被称为GATT服务器，central设备自然是客户端的概念。因此central可以向GATT Server发出请求，这个请求就是CBAttRequest.
+由于CBAttRequest只能从Central设备发向Peripheral,也就是说只有当iOS设备作为外设收到请求时，该类才会被使用。这就是我们会看到为什么CBAttRequest只在CBPeripheralManager和CBPeripheralManagerDelegate里面使用。那么CBAttRequest的属性也就一目了然了：</p>
+<pre><code>// 请求的来源设备。
+@property(readonly, nonatomic) CBCentral *central;
+// 将要被读写的特性。
+@property(readonly, nonatomic) CBCharacteristic *characteristic;
+// 读写数据的位移量。
+@property(readonly, nonatomic) NSUInteger offset;
+// 如果是写数据的请求，这就是要写的数据；否则为nil。
+@property(readwrite, copy, nullable) NSData *value;
+</code></pre>
+
+<h3 id="cbperipheralmanagercbperipheralmanagerdelegate">CBPeripheralManager和CBPeripheralManagerDelegate</h3>
+<p>如果将iOS设备作为Peripheral而不是Central，那么我们就要定义这个Peripheral的广播,Service,Characteristic等内容。这时候就必须要用到CBPeripheralManager.</p>
+<pre><code>- (void)setDesiredConnectionLatency:(CBPeripheralManagerConnectionLatency)latency forCentral:(CBCentral *)central;
+</code></pre>
+
+<p>可以设置期待的连接延迟。首先看看CBPeripheralManagerConnectionLatency的定义：</p>
+<pre><code>typedef NS_ENUM(NSInteger, CBPeripheralManagerConnectionLatency) {
+    CBPeripheralManagerConnectionLatencyLow = 0,
+    CBPeripheralManagerConnectionLatencyMedium,
+    CBPeripheralManagerConnectionLatencyHigh
+} NS_ENUM_AVAILABLE(10_9, 6_0);
+</code></pre>
+
+<p>这里需要了解一下Link Layer(链路层)是如何知道数据包发送成功与否的。在各种client的BLE框架中，都有着关于数据包发送成功与否的回调。这个背后实质上是链路层数据的交换，即使没有显性的GATT数据交互。</p>
+<blockquote>
+<p>两个设备使用特定的信道发送和接收数据，然后过一段时间后再使用新的信道（BLE协议栈的链路层处理信道的切换）。两个设备在切换信道后发送和接收数据称为一个连接事件。尽管没有应用数据被发送和接收，两个设备仍旧会交换链路层数据（空包 Empty PDU）来维持连接。
+参见：<a href="https://www.cnblogs.com/dirt2/p/6210837.html">BLE连接事件</a></p>
+</blockquote>
+<p>那么当ConnectionLatency设置为Low或者0时，central设备发包后，slave一定会回复PDU包，否则central就认为该数据接收不正常。这样可以确保发送消息的稳定性，但是同时增加了电池耗电量。
+而ConnectionLatency设置为Medium或者High时，会忽略中间的某些连接事件，然后间隔性的回复central来节省电量。</p>
+<pre><code>- (void)respondToRequest:(CBATTRequest *)request withResult:(CBATTError)result;
+</code></pre>
+
+<p>当创建的PeripheralManager接收到来自central设备的读或写的请求CBATTRequest时，可以通过该函数来告诉central设备该请求发送成功或者失败原因。
+但是CBATTError中包含了成功状态CBATTErrorSuccess，而参数命名为result似乎有一定歧义，可能使用例如CBATTRequestStatus更加直观一些。</p>
+<pre><code>- (BOOL)updateValue:(NSData *)value forCharacteristic:(CBMutableCharacteristic *)characteristic onSubscribedCentrals:(nullable NSArray&lt;CBCentral *&gt; *)centrals;
+</code></pre>
+
+<p>通过某个特性向central设备更新数据。
+<strong>CBPeripheralManagerDelegate</strong></p>
+<pre><code>- (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral;
+</code></pre>
+
+<p>如果某次向central设备更新数据失败，当peripheralManager重新准备更新数据时，该回调将会被触发。</p>
+<p>那么到此处关于CoreBluetooth框架的解析就告一段落了，该框架按照BLE协议栈中的最上面的GATT/GAP/ATT协议以及极少的L2CAP层构建了完整的central或periphral设备的所需功能。
+但是对于这种框架来说，使用起来需要通过各种Delegate进行交互，实质上带来了很大的不方便。比如开发者可能更加希望，能够通过一个central的构建完成所有的功能，因此在很多团队会进行一些封装，也有比较成熟的第三方库。
+而且该框架同时提供了central或者peripheral设备的构建功能，对于一般只将App作为central设备的开发者而言，只是增加了理解的复杂度。就我个人而言，peripheral和peripheralManager的区分并非那么明显，命名是可以斟酌的。
+如果有时间，我将试着解析一个流行的BLE库RxBluetoothKit, 看看相对原生CoreBluetooth, 它做了哪些优化。</p>
+<p>同时我将会试着在不参考其他任何Demo或者文档的情况下，去构建一个Peripheral, 并且与另一个Central设备通信,来检验自己的理解是否足够透彻。</p>
+<h2 id="_1">参考资料</h2>
+<ul>
+<li><a href="https://www.jianshu.com/p/2ddf76ab85b0">ANCS协议分析</a></li>
+<li><a href="https://link.jianshu.com/?t=https://developer.apple.com/library/content/documentation/CoreBluetooth/Reference/AppleNotificationCenterServiceSpecification/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013460-CH2-SW1">ANCS Spec</a></li>
+<li><a href="https://blog.csdn.net/yk150915/article/details/87618584">GATT服务构成</a></li>
+<li><a href="https://www.dazhuanlan.com/2020/01/21/5e2704fb6b8df/">CoreBluetooth的后台工作模式</a></li>
+<li><a href="https://www.cnblogs.com/dirt2/p/6210837.html">BLE连接事件</a></li>
+</ul>
+<h2 id="_2">待解决问题：</h2>
+<ul>
+<li>maximumWriteValueLengthForType:函数</li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../NSObject%2CNSProxy%E4%BB%A5%E5%8F%8A%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="NSObject,NSProxy以及异常处理" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                NSObject,NSProxy以及异常处理
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../../%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/BLE%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" title="BLE的底层原理" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                BLE的底层原理
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

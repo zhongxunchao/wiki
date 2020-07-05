@@ -89,6 +89,7 @@ CoreBluetooth是iOS系统提供的关于BLE（低功耗蓝牙）交互的框架�
 
 ##CoreBluetooth的框架概览
 ![CoreBluetooth类图](../../out/UML/CoreBluetooth/CoreBluetooth.png)
+
 上面是我绘制的CoreBluetooth的类图，基本包含了所有用到的类。当我绘制完成这张图的时候，便发现了很多知识的漏洞，定期的梳理是非常有必要的。
 ### CBUUID
 在GATT协议中，Service, Characteristic, Descriptor都有这着相应的UUID，虽然它只是一个2个（官方）或16个（自定义）字节的数据，但是把它抽象出来是很有必要的。它是服务或特性的唯一ID.
@@ -194,17 +195,112 @@ typedef NS_ENUM(NSInteger, CBCharacteristicWriteType) {
  ```
  - (void)openL2CAPChannel:(CBL2CAPPSM)PSM;
  ```
- 
+这个函数让我比较困扰，L2CAP是BLE协议栈中非常重要的一层，但是在一般的BLE开发中，这一层的数据都已经封装好了。所以我花了很多时间尝试理解该函数的使用场景。
+L2CAP层解决了一个重要的问题，就是协议/信道的多路复用。同时提供了两种多路复用的手段：基于连接的多路复用和无连接的方法。
+PSM，即Protocol/Service Multiplexing, 是无连接复用中的一个字段，可以把它当作CID(Channel ID)的一种替代。
+那么该函数就是可以（基于无连接的方式？）打开新的L2CAP信道。而PSM是CBL2CAPChannel类的一个属性。在一般的BLE开发中，都会通过Characteristic去发送和接收数据，而在外设主动放开L2CAP信道的情况下，Central设备和外设是可以以数据流的方式直接进行通信的。此时Central设备就要调用该函数去打开该Channel。
+ <font color='red'>这也是我未曾实现的内容，我将通过2个iOS App来测试该功能.</font>
 
+###CBManager
+前面提到一般BLE的开发时，主要用到两个类：CBCentralManager和CBPeripheral.
+在思考iOS对于CoreBluetooth的设计时，一个有趣的点是框架将CBCentral和CBCentralManager区分开，CBPeripheral和CBPeripheralManager同样如此。理解了这样的设计逻辑，我们才能知道CBManager在框架中的作用。
+以我的理解看，CBCentral在框架中的作用是非常弱的，几乎不会用到，或者说，它是可以被CBCentralManager完全替代的。设想一个iOS app初始化一个Central（可能是单例）然后设置CentralDelegate来监听Central设备的各种变化，看上去也是可行的。
+而CBPeripheral和CBPeripheralManager却并非可以互相替代的。比如CBPeripheral包含了发现Service和Characteristic和读写数据的方法，而CBPeripheralManager描述了如果一个iOS App想要作为Peripheral而不是Central设备，应该如何去广播，构建Service等内容。而Central设备不需要这些构建，因此CBCentral看起来根本没做什么事。
+回过头来看CBManager作为CBCentralManager和CBPeripheralManager抽象出来的父类，包含了打开/关闭等状态以及认证相关的属性；再次思考一下，这些属性作为设备的一个属性也是可行的，比如加入到CBPeer里面。但是这样一来，将CBPeripheral和CBPeripheralManager合并的话，里面包含的方法会非常广泛，而逻辑仍然是自洽的。
+
+###CBCentralManager和CBCentralManagerDelegate
+```
+- (NSArray<CBPeripheral *> *)retrievePeripheralsWithIdentifiers:(NSArray<NSUUID *> *)identifiers;
+```
+重连已知的 peripheral 列表中的 peripheral,这些外设是已经发现或者已经连接过的。
+```
+- (void)registerForConnectionEventsWithOptions:(nullable NSDictionary<CBConnectionEventMatchingOption, id> *)options;
+```
+会对连接的Event进行注册和监控，如果Event发生，将会在CBCentralManagerDelegate里面的centralManager:connectionEventDidOccur:forPeripheral:进行响应。
+这些Event包括：
+```
+typedef NS_ENUM(NSInteger, CBConnectionEvent) {
+	CBConnectionEventPeerDisconnected = 0,
+	CBConnectionEventPeerConnected	= 1,
+};
+```
+**CBCentralManagerDelegate**
+```
+- (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary<NSString *, id> *)dict;
+```
+当app即将进入后台或者被唤醒时，可以获取需要恢复的的CBCentralManager状态数据。参见：
+[CoreBluetooth的后台工作模式](https://www.dazhuanlan.com/2020/01/21/5e2704fb6b8df/)
+该后台模式值得进一步探究。
+
+```
+- (void)centralManager:(CBCentralManager *)central didUpdateANCSAuthorizationForPeripheral:(CBPeripheral *)peripheral;
+```
+参考前面对于ANCS的解释，即当一个ANCS设备的认证状态发生变化时，该方法将被调用。
+
+###CBAttRequest
+代表了来自central设备的一个读或者写数据的请求。
+GATT协议中定义了Server/Client的概念，外部设备(Peripheral)又被称为GATT服务器，central设备自然是客户端的概念。因此central可以向GATT Server发出请求，这个请求就是CBAttRequest.
+由于CBAttRequest只能从Central设备发向Peripheral,也就是说只有当iOS设备作为外设收到请求时，该类才会被使用。这就是我们会看到为什么CBAttRequest只在CBPeripheralManager和CBPeripheralManagerDelegate里面使用。那么CBAttRequest的属性也就一目了然了：
+```
+// 请求的来源设备。
+@property(readonly, nonatomic) CBCentral *central;
+// 将要被读写的特性。
+@property(readonly, nonatomic) CBCharacteristic *characteristic;
+// 读写数据的位移量。
+@property(readonly, nonatomic) NSUInteger offset;
+// 如果是写数据的请求，这就是要写的数据；否则为nil。
+@property(readwrite, copy, nullable) NSData *value;
+```
+
+###CBPeripheralManager和CBPeripheralManagerDelegate
+如果将iOS设备作为Peripheral而不是Central，那么我们就要定义这个Peripheral的广播,Service,Characteristic等内容。这时候就必须要用到CBPeripheralManager.
+```
+- (void)setDesiredConnectionLatency:(CBPeripheralManagerConnectionLatency)latency forCentral:(CBCentral *)central;
+```
+可以设置期待的连接延迟。首先看看CBPeripheralManagerConnectionLatency的定义：
+```
+typedef NS_ENUM(NSInteger, CBPeripheralManagerConnectionLatency) {
+	CBPeripheralManagerConnectionLatencyLow = 0,
+	CBPeripheralManagerConnectionLatencyMedium,
+	CBPeripheralManagerConnectionLatencyHigh
+} NS_ENUM_AVAILABLE(10_9, 6_0);
+```
+这里需要了解一下Link Layer(链路层)是如何知道数据包发送成功与否的。在各种client的BLE框架中，都有着关于数据包发送成功与否的回调。这个背后实质上是链路层数据的交换，即使没有显性的GATT数据交互。
+>两个设备使用特定的信道发送和接收数据，然后过一段时间后再使用新的信道（BLE协议栈的链路层处理信道的切换）。两个设备在切换信道后发送和接收数据称为一个连接事件。尽管没有应用数据被发送和接收，两个设备仍旧会交换链路层数据（空包 Empty PDU）来维持连接。
+参见：[BLE连接事件](https://www.cnblogs.com/dirt2/p/6210837.html)
+
+那么当ConnectionLatency设置为Low或者0时，central设备发包后，slave一定会回复PDU包，否则central就认为该数据接收不正常。这样可以确保发送消息的稳定性，但是同时增加了电池耗电量。
+而ConnectionLatency设置为Medium或者High时，会忽略中间的某些连接事件，然后间隔性的回复central来节省电量。
+
+```
+- (void)respondToRequest:(CBATTRequest *)request withResult:(CBATTError)result;
+```
+当创建的PeripheralManager接收到来自central设备的读或写的请求CBATTRequest时，可以通过该函数来告诉central设备该请求发送成功或者失败原因。
+但是CBATTError中包含了成功状态CBATTErrorSuccess，而参数命名为result似乎有一定歧义，可能使用例如CBATTRequestStatus更加直观一些。
+```
+- (BOOL)updateValue:(NSData *)value forCharacteristic:(CBMutableCharacteristic *)characteristic onSubscribedCentrals:(nullable NSArray<CBCentral *> *)centrals;
+```
+通过某个特性向central设备更新数据。
+**CBPeripheralManagerDelegate**
+```
+- (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral;
+```
+如果某次向central设备更新数据失败，当peripheralManager重新准备更新数据时，该回调将会被触发。
+
+那么到此处关于CoreBluetooth框架的解析就告一段落了，该框架按照BLE协议栈中的最上面的GATT/GAP/ATT协议以及极少的L2CAP层构建了完整的central或periphral设备的所需功能。
+但是对于这种框架来说，使用起来需要通过各种Delegate进行交互，实质上带来了很大的不方便。比如开发者可能更加希望，能够通过一个central的构建完成所有的功能，因此在很多团队会进行一些封装，也有比较成熟的第三方库。
+而且该框架同时提供了central或者peripheral设备的构建功能，对于一般只将App作为central设备的开发者而言，只是增加了理解的复杂度。就我个人而言，peripheral和peripheralManager的区分并非那么明显，命名是可以斟酌的。
+如果有时间，我将试着解析一个流行的BLE库RxBluetoothKit, 看看相对原生CoreBluetooth, 它做了哪些优化。
+
+同时我将会试着在不参考其他任何Demo或者文档的情况下，去构建一个Peripheral, 并且与另一个Central设备通信,来检验自己的理解是否足够透彻。
 
 ##参考资料
 * [ANCS协议分析](https://www.jianshu.com/p/2ddf76ab85b0)
 * [ANCS Spec](https://link.jianshu.com/?t=https://developer.apple.com/library/content/documentation/CoreBluetooth/Reference/AppleNotificationCenterServiceSpecification/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013460-CH2-SW1)
 * [GATT服务构成](https://blog.csdn.net/yk150915/article/details/87618584)
+* [CoreBluetooth的后台工作模式](https://www.dazhuanlan.com/2020/01/21/5e2704fb6b8df/)
+* [BLE连接事件](https://www.cnblogs.com/dirt2/p/6210837.html)
 
 ##待解决问题：
-* 为什么通过CBPeripheralDelegate来实现.
-* CBPeer的存在意义. over
-* CBService的isPrimary属性和includedServices. over
-* CBCharacterisitc的isNotifying属性。over
+* maximumWriteValueLengthForType:函数
 
