@@ -886,7 +886,7 @@
 <p>这样我们已经完成了BLE交互的所有必须步骤：扫描设备，建立BLE连接，发送和接收数据等。
 当然这种很繁琐的代理方法必然不是大多数开发者喜欢的，使用起来非常不方便。比如要连接一个已经知道Service和Characteristic的UUID的设备，我不得不实现很多个代理方法。或者说部分Service是加密的，连接之前必须经过认证，那么后期的连接订阅就非常麻烦。所以后面我也会介绍一些BLE框架的实现思路，以及自己构思的js的BLE库的实现。</p>
 <h2 id="corebluetooth">CoreBluetooth的框架概览</h2>
-<p><img alt="CoreBluetooth类图" src="../../../out/UML/CoreBluetooth/CoreBluetooth.png" /></p>
+<p><img alt="CoreBluetooth类图" src="../../out/UML/CoreBluetooth/CoreBluetooth.png" /></p>
 <p>上面是我绘制的CoreBluetooth的类图，基本包含了所有用到的类。当我绘制完成这张图的时候，便发现了很多知识的漏洞，定期的梳理是非常有必要的。</p>
 <h3 id="cbuuid">CBUUID</h3>
 <p>在GATT协议中，Service, Characteristic, Descriptor都有这着相应的UUID，虽然它只是一个2个（官方）或16个（自定义）字节的数据，但是把它抽象出来是很有必要的。它是服务或特性的唯一ID.</p>
