@@ -1,0 +1,603 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>从React的优缺点说起 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#react" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="My Docs" class="md-header-nav__button md-logo" aria-label="My Docs">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            My Docs
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              从React的优缺点说起
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      iOS
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="iOS" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        iOS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../iOS/%E7%AE%80%E5%8D%95%E7%9A%84%E8%AE%A1%E7%AE%97%E5%99%A8/" title="简单的计算器实现" class="md-nav__link">
+      简单的计算器实现
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../iOS/NSObject%2CNSProxy%E4%BB%A5%E5%8F%8A%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="NSObject,NSProxy以及异常处理" class="md-nav__link">
+      NSObject,NSProxy以及异常处理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../iOS/CoreBluetooth%E6%A1%86%E6%9E%B6%E8%A7%A3%E6%9E%90/" title="CoreBluetooth框架解析" class="md-nav__link">
+      CoreBluetooth框架解析
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      智能家居
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="智能家居" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        智能家居
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/BLE%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" title="BLE的底层原理" class="md-nav__link">
+      BLE的底层原理
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      翻译
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="翻译" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        翻译
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E7%BF%BB%E8%AF%91/AppleScript%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D/" title="AppleScript语言介绍" class="md-nav__link">
+      AppleScript语言介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E7%BF%BB%E8%AF%91/BLE%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D/" title="BLE技术介绍" class="md-nav__link">
+      BLE技术介绍
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      读书笔记
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="读书笔记" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        读书笔记
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%B8%80%E7%AF%87/" title="《程序开发心理学》第一篇" class="md-nav__link">
+      《程序开发心理学》第一篇
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%BA%8C%E7%AF%87/" title="《程序开发心理学》第二篇" class="md-nav__link">
+      《程序开发心理学》第二篇
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E4%B8%89%E7%AF%87/" title="《程序开发心理学》第三篇" class="md-nav__link">
+      《程序开发心理学》第三篇
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%BF%83%E7%90%86%E5%AD%A6%E3%80%8B%E7%AC%AC%E5%9B%9B%E7%AF%87/" title="《程序开发心理学》第四篇" class="md-nav__link">
+      《程序开发心理学》第四篇
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D%E3%80%8B%E7%AC%94%E8%AE%B0/" title="《人月神话》笔记" class="md-nav__link">
+      《人月神话》笔记
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#react" class="md-nav__link">
+    React的优缺点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    网页的渲染机制
+  </a>
+  
+    <nav class="md-nav" aria-label="网页的渲染机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dom" class="md-nav__link">
+    DOM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dom_1" class="md-nav__link">
+    虚拟DOM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iosandroid" class="md-nav__link">
+    iOS与Android应用中的页面
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    参考资料
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                  <h1>从React的优缺点说起</h1>
+                
+                <p>其实做前端项目有一些时间了，过去的工作经历虽然以iOS为主，中间也零碎的研究过React, Vue, 原生h5, flutter等等。之前这几个月完成了一个React项目的开发，想着应该对前端的开发经验做一些总结，所以这可能是一个漫谈的博客。</p>
+<h2 id="react">React的优缺点</h2>
+<p>在目前的一些资料中，公认的React的优点有这些：
+* 引入了虚拟DOM， 插入在js逻辑和实际DOM之间，性能很好。
+* 一切都是组件，重用更加容易。
+* 兼容性好。（对浏览器的兼容性和对现有web框架的兼容性）</p>
+<p>缺点一般提到：
+* 不适合做一个单独完整的框架，需要和数据交互的框架（比如Redux或Flux）等联合使用。
+* 可能有未知的坑。</p>
+<p>其中React的组件化的好处可能是最直观的，将DOM元素与JS逻辑相结合的写法一开始让我觉得非常惊艳，毕竟coding的时候不断切换文件并非什么美好的体验，而且这种方式让UI交互变得非常直观。至于兼容性的优势，做的项目多了自然也就感觉到其中的方便。
+让我有些困扰的反而是虚拟DOM的概念，我之前并未系统研究过web的优化工作，正好趁此机会了解它们的底层原理。</p>
+<h2 id="_1">网页的渲染机制</h2>
+<p>一般来说，一个应用页面/网页都会提供下面的内容：
+* 一个包含多个节点的XML文件;
+* 包含各节点样式的css文件或者其他文件。
+在iOS开发中，storyboard或者xib文件实质上都是XML文件，只需将它们用文本打开即可看到。Android应用中的页面也可以直接看到背后的XML文件。
+需要注意的是，iOS和Android中的页面与web网页仍然有很大的区别，这一点将在下面描述。</p>
+<p>这里先说说普通的网页是如何渲染的。
+粘贴一段网络博客的原话，来自：
+<a href="https://www.jianshu.com/p/b7b7a5904223">浏览器是如何渲染页面的？</a></p>
+<pre><code>1. 处理HTML标记并构建DOM树
+2. 处理CSS标记并构建CSSOM树
+3. 将DOM与CSSOM合并成一个渲染树
+4. 根据渲染树来布局，计算每个节点的布局信息
+5. 将各个节点绘制到屏幕上
+</code></pre>
+
+<h3 id="dom">DOM</h3>
+<p>DOM是文档对象化模型(Document Object Model)的简称。DOM Tree是指通过DOM将HTML页面进行解析，并生成的HTML tree树状结构和对应访问方法,是网页的一种结构化描述。借助DOM TREE，我们可以操作HTML页面上的每个标签。
+主要研究了CSDN上一位博主的文章：
+<a href="https://me.csdn.net/Luoshengyang">罗升阳</a>
+以及一篇经典文章：
+<a href="http://taligarsiel.com/Projects/howbrowserswork1.htm">How browsers work</a>
+这里会先跳过该部分内容，如果以后能够更多收获，再继续更新。</p>
+<h3 id="dom_1">虚拟DOM</h3>
+<p>如果你对虚拟DOM还没有一个清晰的概念，建议参考下面的文章，原文和翻译都很棒：
+* 中文：<a href="https://www.jianshu.com/p/e131df377053">React性能优化-虚拟Dom原理浅析</a>
+* 英文：<a href="https://evilmartians.com/chronicles/optimizing-react-virtual-dom-explained">Optimizing React:Virtual DOM explained</a></p>
+<p>在React中，所有的JSX文件都会被转化为纯JavaScript, 组件中的标签被转化为JS中的对象，这些对象构成了React的虚拟DOM。所以虚拟DOM是JSX文件和真正DOM的中间态。
+那么回过来看React的优点：</p>
+<blockquote>
+<p>引入了虚拟DOM， 插入在js逻辑和实际DOM之间，性能很好。</p>
+</blockquote>
+<p>虚拟DOM在初次渲染时并没有任何优势，但是在更新UI时，React做了很多优化去更好的redraw和re-render.这就是它的性能优势的来源。</p>
+<h2 id="iosandroid">iOS与Android应用中的页面</h2>
+<p>这里有以下内容待完善：
+* 这些页面是如何描述和组织的？
+* iOS的纯UI代码是如何转化为页面元素的？
+* iOS的代码是如何操作UI元素的？
+* 为什么原生的页面会比跨平台框架的页面更快？</p>
+<h2 id="_2">参考资料</h2>
+<ul>
+<li><a href="https://www.jianshu.com/p/b7b7a5904223">浏览器是如何渲染页面的？</a></li>
+<li><a href="http://taligarsiel.com/Projects/howbrowserswork1.htm">How browsers work</a></li>
+<li><a href="https://www.jianshu.com/p/e131df377053">React性能优化-虚拟Dom原理浅析</a></li>
+<li><a href="https://evilmartians.com/chronicles/optimizing-react-virtual-dom-explained">Optimizing React:Virtual DOM explained</a></li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
