@@ -622,9 +622,11 @@
                 
                 <p>其实做前端项目有一些时间了，过去的工作经历虽然以iOS为主，中间也零碎的研究过React, Vue, 原生h5, flutter等等。之前这几个月完成了一个React项目的开发，想着应该对前端的开发经验做一些总结，所以这可能是一个漫谈的博客。</p>
 <h2 id="react">React的优缺点</h2>
-<p>在目前的一些资料中，公认的React的优点有这些：
-* 引入了虚拟DOM， 插入在js逻辑和实际DOM之间，性能很好。</p>
+<p>在目前的一些资料中，公认的React的优点有这些：</p>
 <ul>
+<li>
+<p>引入了虚拟DOM， 插入在js逻辑和实际DOM之间，性能很好。</p>
+</li>
 <li>
 <p>一切都是组件，重用更加容易。</p>
 </li>
@@ -632,18 +634,26 @@
 <p>兼容性好。（对浏览器的兼容性和对现有web框架的兼容性）</p>
 </li>
 </ul>
-<p>缺点一般提到：
-* 不适合做一个单独完整的框架，需要和数据交互的框架（比如Redux或Flux）等联合使用。</p>
+<p>缺点一般提到：</p>
 <ul>
-<li>可能有未知的坑。</li>
+<li>
+<p>不适合做一个单独完整的框架，需要和数据交互的框架（比如Redux或Flux）等联合使用。</p>
+</li>
+<li>
+<p>可能有未知的坑。</p>
+</li>
 </ul>
 <p>其中React的组件化的好处可能是最直观的，将DOM元素与JS逻辑相结合的写法一开始让我觉得非常惊艳，毕竟coding的时候不断切换文件并非什么美好的体验，而且这种方式让UI交互变得非常直观。至于兼容性的优势，做的项目多了自然也就感觉到其中的方便。
 让我有些困扰的反而是虚拟DOM的概念，我之前并未系统研究过web的优化工作，正好趁此机会了解它们的底层原理。</p>
 <h2 id="_1">网页的渲染机制</h2>
-<p>一般来说，一个应用页面/网页都会提供下面的内容：
-* 一个包含多个节点的XML文件;</p>
+<p>一般来说，一个应用页面/网页都会提供下面的内容：</p>
 <ul>
-<li>包含各节点样式的css文件或者其他文件。</li>
+<li>
+<p>一个包含多个节点的XML文件;</p>
+</li>
+<li>
+<p>包含各节点样式的css文件或者其他文件。</p>
+</li>
 </ul>
 <p>在iOS开发中，storyboard或者xib文件实质上都是XML文件，只需将它们用文本打开即可看到。Android应用中的页面也可以直接看到背后的XML文件。
 需要注意的是，iOS和Android中的页面与web网页仍然有很大的区别，这一点将在下面描述。</p>
@@ -665,10 +675,14 @@
 <a href="http://taligarsiel.com/Projects/howbrowserswork1.htm">How browsers work</a>
 这里会先跳过该部分内容，如果以后能够更多收获，再继续更新。</p>
 <h3 id="dom_1">虚拟DOM</h3>
-<p>如果你对虚拟DOM还没有一个清晰的概念，建议参考下面的文章，原文和翻译都很棒：
-* 中文：<a href="https://www.jianshu.com/p/e131df377053">React性能优化-虚拟Dom原理浅析</a></p>
+<p>如果你对虚拟DOM还没有一个清晰的概念，建议参考下面的文章，原文和翻译都很棒：</p>
 <ul>
-<li>英文：<a href="https://evilmartians.com/chronicles/optimizing-react-virtual-dom-explained">Optimizing React:Virtual DOM explained</a></li>
+<li>
+<p>中文：<a href="https://www.jianshu.com/p/e131df377053">React性能优化-虚拟Dom原理浅析</a></p>
+</li>
+<li>
+<p>英文：<a href="https://evilmartians.com/chronicles/optimizing-react-virtual-dom-explained">Optimizing React:Virtual DOM explained</a></p>
+</li>
 </ul>
 <p>在React中，所有的JSX文件都会被转化为纯JavaScript, 组件中的标签被转化为JS中的对象，这些对象构成了React的虚拟DOM。所以虚拟DOM是JSX文件和真正DOM的中间态。
 那么回过来看React的优点：</p>
@@ -677,9 +691,11 @@
 </blockquote>
 <p>虚拟DOM在初次渲染时并没有任何优势，但是在更新UI时，React做了很多优化去更好的redraw和re-render.这就是它的性能优势的来源。</p>
 <h2 id="iosandroid">iOS与Android应用中的页面</h2>
-<p>这里有以下内容待完善：
-* 这些页面是如何描述和组织的？</p>
+<p>这里有以下内容待完善：</p>
 <ul>
+<li>
+<p>这些页面是如何描述和组织的？</p>
+</li>
 <li>
 <p>iOS的纯UI代码是如何转化为页面元素的？</p>
 </li>
